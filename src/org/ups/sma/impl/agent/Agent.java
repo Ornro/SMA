@@ -1,17 +1,19 @@
 package org.ups.sma.impl.agent;
 
+import java.lang.reflect.Field;
+
 import org.ups.sma.domain.custom.agent.Public;
 import org.ups.sma.domain.custom.agent.State;
-import org.ups.sma.impl.actionEngine.ActionEngine;
+import org.ups.sma.impl.actionengine.ActionEngine;
 import org.ups.sma.impl.agent.impl.Act;
-import org.ups.sma.impl.custom.agent.Percieve;
-import org.ups.sma.impl.agent.interfaces.*;
+import org.ups.sma.impl.agent.interfaces.Decider;
+import org.ups.sma.impl.agent.interfaces.Effector;
+import org.ups.sma.impl.agent.interfaces.Perciever;
 import org.ups.sma.impl.custom.agent.Decide;
+import org.ups.sma.impl.custom.agent.Percieve;
 import org.ups.sma.interfaces.ActionManager;
 import org.ups.sma.interfaces.Actor;
 import org.ups.sma.interfaces.Statefull;
-
-import java.lang.reflect.Field;
 
 /**
  * Created by Ben on 24/05/14.

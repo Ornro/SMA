@@ -1,7 +1,7 @@
 import java.util.Date;
 
 import org.ups.sma.domain.Mode;
-import org.ups.sma.impl.ActionEngine.ActionEngine;
+import org.ups.sma.impl.actionengine.ActionEngine;
 import org.ups.sma.interfaces.ActionManager;
 import org.ups.sma.interfaces.Actor;
 import org.ups.sma.interfaces.Control;
