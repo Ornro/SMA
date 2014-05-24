@@ -1,7 +1,7 @@
 package org.ups.sma.interfaces;
 
-import org.ups.sma.domain.Coord;
-import org.ups.sma.domain.Env;
+import org.ups.sma.domain.custom.agent.Coord;
+import org.ups.sma.domain.environnement.Env;
 
 public interface IEnvironnementManager {
 	/**
