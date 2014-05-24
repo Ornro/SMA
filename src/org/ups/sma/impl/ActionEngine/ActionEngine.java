@@ -13,7 +13,11 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 	
 	private ArrayList<Actor> actorList = new ArrayList<Actor>();
 	private Mode currentMode = Mode.AUTO;
+	private boolean isPlaying = false;
 
+	private int delay = 100;
+	
+	private Thread thread = null;
 	
 	private ActionEngine(){ }
 	
@@ -31,16 +35,33 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 	
 	@Override
 	public void play() {
+		if(currentMode != Mode.AUTO) return;
 		
+		if(isPlaying) return;
+		
+		isPlaying = true;
+		
+		thread = new Thread(this);
+		thread.start();
 	}
 
 	@Override
 	public void pause() {
+		if(currentMode != Mode.AUTO) return;
 		
+		if(!isPlaying) return;
+		
+		isPlaying = false;
+		
+		thread.interrupt();
 	}
 
 	@Override
 	public void changeMode(Mode newMode) {
+		if(newMode == currentMode) return;
+		
+		pause();
+		
 		currentMode = newMode;
 	}
 
@@ -50,6 +71,14 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 		
 		notifyActors();
 	}
+
+	@Override
+	public void setDelay(int delay) {
+		this.delay = delay;
+	}
+
+	
+	
 
 	
 	@Override
@@ -70,6 +99,18 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 	@Override
 	public void run() {
 		
+		while(true){
+			notifyActors();
+			
+			try {
+				Thread.sleep(delay);
+			} catch (InterruptedException e) {
+				//e.printStackTrace();
+				Thread.currentThread().interrupt();
+				break;
+			}
+		}
+		
 	}
 	
 	
@@ -78,5 +119,4 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 			actorList.get(i).act();
 		}
 	}
-
 }

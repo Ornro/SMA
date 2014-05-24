@@ -7,4 +7,5 @@ public interface Control {
 	public void pause();
 	public void changeMode(Mode newMode);
 	public void step();
+	public void setDelay(int delay);
 }
