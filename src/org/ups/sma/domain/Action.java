@@ -1,4 +1,4 @@
-package org.ups.sma.domain.custom;
+package org.ups.sma.domain;
 
 /**
  * Created by Ben on 24/05/14.
