@@ -2,13 +2,15 @@ package org.ups.sma.interfaces;
 
 import org.ups.sma.domain.custom.agent.Coord;
 import org.ups.sma.domain.environnement.Env;
+import org.ups.sma.impl.agent.Agent;
 
 public interface IEnvironnementManager {
 	/**
-	 * Prends en paramètre les coordonnés de l'acteur et son champ de vision
-	 * et retourne l'environnement partiel lié à la demande
+	 * Prends en paramÃ©tre les coordonnÃ©es de l'acteur et son champ de vision
+	 * et retourne l'environnement partiel lis Ã  la demande
 	 */
-	public Env getEnvironnement(Coord c, int range);
+    // to edit
+	public Env getEnvironnement(Agent agent);
 	public Env getFullEnvironnement();
 	public void notifyStateChange(Statefull s);
 	
