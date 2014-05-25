@@ -1,14 +1,63 @@
 package org.ups.sma.domain.environnement;
 
-import java.util.List;
+import org.ups.sma.domain.custom.environnement.Location;
+import org.ups.sma.domain.custom.environnement.Size;
+
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
-import org.ups.sma.domain.custom.agent.Coord;
-import org.ups.sma.domain.EnvironnementObject;
-import org.ups.sma.interfaces.Statefull;
-
 public class Env {
-	public int width;
-	public int height;
-	public Map<Coord,EnvironnementObject> map;
+    public Size size;
+	public Map<Location,InteractiveEnvironmentObject> map;
+
+    /**
+     * Default constructor may not be safe if the user has not implemented
+     * the necessary methods.
+     */
+    public Env() {
+        this.map = new HashMap<Location,InteractiveEnvironmentObject>();
+        this.size = new Size();
+    }
+
+    // Constructor that is safe to use.
+    public Env(Size size, Map<Location, InteractiveEnvironmentObject> map) {
+        this.size = size;
+        this.map = map;
+    }
+
+    // Constructor that is safe to use.
+    public Env(Size size) {
+        this.size = size;
+        this.map = new HashMap<Location,InteractiveEnvironmentObject>();
+    }
+
+    /**
+     * Merges the given environment to this one.
+     * We suppose this one is the old one and if any conflict is met
+     * this environment will be overwritten.
+     *
+     * @param other the new part of environment
+     * @return true if the merge was done false if not. It
+     * may happen that the environments are not merged if their
+     * size is different.
+     *
+     * NOTE: an environment can have a big size and yet only
+     * contain information for a tiny part of it. The check only
+     * ensures that the environment won't be bigger than the old one
+     * without forcing the user to implement a method telling which
+     * of two sizes is bigger which may be complicated.
+     */
+    public boolean merge(Env other){
+        Iterator<Map.Entry<Location,InteractiveEnvironmentObject>> oldMapIt = this.map.entrySet().iterator();
+        if (this.size.equals(other)){
+            for (Location l : other.map.keySet()) {
+                this.map.get(l).destroy();
+                this.map.put(l,other.map.get(l));
+            }
+            return true;
+        }
+        return false;
+    }
+
 }
