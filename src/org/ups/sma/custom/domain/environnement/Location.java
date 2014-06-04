@@ -1,4 +1,4 @@
-package org.ups.sma.domain.custom.environnement;
+package org.ups.sma.custom.domain.environnement;
 
 /**
  * Created by Ben on 24/05/14.

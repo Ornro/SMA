@@ -1,27 +1,27 @@
 package org.ups.sma.domain.environnement;
 
-import org.ups.sma.domain.custom.environnement.Location;
-import org.ups.sma.domain.custom.environnement.Size;
+import org.ups.sma.custom.domain.environnement.Location;
+import org.ups.sma.custom.domain.environnement.Size;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
+import java.util.Stack;
 
 public class Env {
     public Size size;
-	public Map<Location,InteractiveEnvironmentObject> map;
+	public Map<Location,Stack<InteractiveEnvironmentObject>> map;
 
     /**
      * Default constructor may not be safe if the user has not implemented
      * the necessary methods.
      */
     public Env() {
-        this.map = new HashMap<Location,InteractiveEnvironmentObject>();
+        this.map = new HashMap<Location,Stack<InteractiveEnvironmentObject>>();
         this.size = new Size();
     }
 
     // Constructor that is safe to use.
-    public Env(Size size, Map<Location, InteractiveEnvironmentObject> map) {
+    public Env(Size size, Map<Location, Stack<InteractiveEnvironmentObject>> map) {
         this.size = size;
         this.map = map;
     }
@@ -29,7 +29,7 @@ public class Env {
     // Constructor that is safe to use.
     public Env(Size size) {
         this.size = size;
-        this.map = new HashMap<Location,InteractiveEnvironmentObject>();
+        this.map = new HashMap<Location, Stack<InteractiveEnvironmentObject>>();
     }
 
     /**
@@ -49,15 +49,19 @@ public class Env {
      * of two sizes is bigger which may be complicated.
      */
     public boolean merge(Env other){
-        Iterator<Map.Entry<Location,InteractiveEnvironmentObject>> oldMapIt = this.map.entrySet().iterator();
         if (this.size.equals(other)){
             for (Location l : other.map.keySet()) {
-                this.map.get(l).destroy();
+                Stack current = this.map.get(l);
+
+                while (!current.empty()){
+                    InteractiveEnvironmentObject e = (InteractiveEnvironmentObject) current.pop();
+                    e.destroy();
+                }
+
                 this.map.put(l,other.map.get(l));
             }
             return true;
         }
         return false;
     }
-
 }

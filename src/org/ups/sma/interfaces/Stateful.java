@@ -1,6 +1,6 @@
 package org.ups.sma.interfaces;
 
-import org.ups.sma.domain.custom.agent.State;
+import org.ups.sma.custom.domain.agent.State;
 
 public interface Stateful {
 	public State getState();

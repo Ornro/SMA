@@ -1,6 +1,8 @@
 package org.ups.sma.domain.environnement;
 
-import org.ups.sma.domain.custom.environnement.Location;
+import org.ups.sma.custom.domain.environnement.Location;
+
+import java.util.Stack;
 
 /**
  * To get a part of an environment,
@@ -11,5 +13,5 @@ import org.ups.sma.domain.custom.environnement.Location;
  * parts of the environment that are requested.
  */
 public interface Filter {
-    public boolean isAcceptable(Location location,InteractiveEnvironmentObject object);
+    public boolean isAcceptable(Location location,Stack<InteractiveEnvironmentObject> object);
 }

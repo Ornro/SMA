@@ -1,14 +1,30 @@
 package org.ups.sma.domain.environnement;
 
+import org.ups.sma.custom.domain.environnement.DrawInformation;
 import org.ups.sma.domain.Action;
+import org.ups.sma.impl.environement.interfaces.Drawable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class InteractiveEnvironmentObject extends LocalizableEnvironmentObject {
+public abstract class InteractiveEnvironmentObject extends LocalizableEnvironmentObject implements Drawable{
     protected List<Action> availableActions = new ArrayList<Action>();
+    protected DrawInformation drawInformation = null;
 
-	public List<Action> getAvailableActions(){
+    protected InteractiveEnvironmentObject(List<Action> availableActions) {
+        super();
+        this.availableActions = availableActions;
+    }
+
+    /**
+     * If null is returned then the object is not drawable
+     * @return
+     */
+    public DrawInformation getDrawInformation(){
+        return drawInformation;
+    }
+
+    public List<Action> getAvailableActions(){
         return availableActions;
     }
 
