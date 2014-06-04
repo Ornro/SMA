@@ -18,11 +18,7 @@ public abstract class Action {
     /**
      * Method that must be overriden
      * @param a
-     * @param o
+     * @param ieo
      */
-    public void execute(Agent a, InteractiveEnvironmentObject o){
-
-    }
-
-
+    public abstract void execute(Agent a, InteractiveEnvironmentObject ieo);
 }

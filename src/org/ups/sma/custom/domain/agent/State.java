@@ -9,5 +9,7 @@ public class State {
     @Public
 	public Location position;
     public boolean isAlive;
-	
+
+    @Public
+    public Boolean holding;
 }
