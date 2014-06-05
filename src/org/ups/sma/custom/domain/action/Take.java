@@ -1,7 +1,6 @@
 package org.ups.sma.custom.domain.action;
 
 import org.ups.sma.domain.Action;
-import org.ups.sma.domain.custom.environnement.Location;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 import org.ups.sma.impl.agent.Agent;
