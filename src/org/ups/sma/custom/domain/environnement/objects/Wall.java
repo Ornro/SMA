@@ -1,18 +1,18 @@
-package org.ups.sma.domain.custom.environnement.objects;
+package org.ups.sma.custom.domain.environnement.objects;
 
 import org.ups.sma.domain.Action;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
-import org.ups.sma.impl.agent.Agent;
+
+import java.util.ArrayList;
 
 /**
- * Custom implementation of an Interactive Environment Object
- * Don't forget to define all the possible actions by an agent
- * in the list as follows in this sample
+ * Example of a wall object
  */
-public class Object extends InteractiveEnvironmentObject {
+public class Wall extends InteractiveEnvironmentObject {
 
-    public Object() {
-        super();
+    public Wall() {
+        // this means no actions are available on a wall
+        super(new ArrayList<Action>());
 
         // uncomment and fill to add an action that any
         // agent will be able to perform.
@@ -21,7 +21,7 @@ public class Object extends InteractiveEnvironmentObject {
 
     @Override
     public void destroy() {
-        // must be set
+
     }
 
     @Override

@@ -1,6 +1,6 @@
 package org.ups.sma.domain.environnement;
 
-import org.ups.sma.domain.custom.environnement.Location;
+import org.ups.sma.custom.domain.environnement.Location;
 
 /**
  * Created by Ben on 24/05/14.
@@ -12,4 +12,7 @@ public abstract class LocalizableEnvironmentObject {
         return this.location;
     }
 
+    public void setLocation ( Location location ){
+        this.location = location;
+    }
 }

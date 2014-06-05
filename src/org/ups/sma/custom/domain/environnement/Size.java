@@ -1,4 +1,4 @@
-package org.ups.sma.domain.custom.environnement;
+package org.ups.sma.custom.domain.environnement;
 
 /**
  * Class used to allow the user to implement a custom size

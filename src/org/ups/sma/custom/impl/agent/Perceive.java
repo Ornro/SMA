@@ -1,4 +1,4 @@
-package org.ups.sma.impl.custom.agent;
+package org.ups.sma.custom.impl.agent;
 
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.Filter;

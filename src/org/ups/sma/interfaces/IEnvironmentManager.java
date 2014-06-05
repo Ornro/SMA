@@ -2,6 +2,7 @@ package org.ups.sma.interfaces;
 
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.Filter;
+import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 
 public interface IEnvironmentManager {
 	/**
@@ -11,5 +12,5 @@ public interface IEnvironmentManager {
     // to edit
 	public Env getFilteredEnvironment(Filter filter);
 	public Env getFullEnvironment();
-	public void notifyStateChange(Stateful s);
+	public void update(InteractiveEnvironmentObject s);
 }

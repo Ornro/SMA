@@ -1,4 +1,4 @@
-package org.ups.sma.domain.custom.agent;
+package org.ups.sma.custom.domain.agent;
 
 /**
  * Created by Ben on 24/05/14.
