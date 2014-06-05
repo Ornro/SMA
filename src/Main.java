@@ -1,6 +1,8 @@
 import java.util.Date;
 
+import org.lightcouch.CouchDbClient;
 import org.ups.sma.domain.Mode;
+import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.impl.actionengine.ActionEngine;
 import org.ups.sma.interfaces.ActionManager;
 import org.ups.sma.interfaces.Actor;
@@ -11,6 +13,11 @@ public class Main {
 
 	public static void main(String[] args) {
 
+
+		CouchDbClient dbClient = new CouchDbClient();
+		
+		Env myEnv = new Env();
+		dbClient.save(myEnv);
 		
 		// Test de l'actionEngine
 		
