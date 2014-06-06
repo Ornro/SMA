@@ -1,20 +1,17 @@
 package org.ups.sma.custom.domain.environnement.objects;
 
-import org.ups.sma.custom.domain.action.Dump;
 import org.ups.sma.custom.domain.environnement.Location;
-import org.ups.sma.domain.Action;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by Business on 04/06/14.
+ * Created by Business on 06/06/14.
  */
-public class Depot extends InteractiveEnvironmentObject {
-    public Depot(Location location) {
-        super(new ArrayList<Action>());
+public class Take extends InteractiveEnvironmentObject {
+    public Take(Location location, List<String> availableActions) {
+        super(availableActions);
         this.location = location;
-        this.availableActions.add(new Dump());
     }
 
     @Override

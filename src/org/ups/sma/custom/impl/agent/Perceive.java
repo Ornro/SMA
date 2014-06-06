@@ -9,7 +9,7 @@ import org.ups.sma.impl.environement.EnvironmentManager;
 /**
  * Created by Ben on 24/05/14.
  */
-public class Perceive implements Perciever {
+public class Perceive extends Perciever {
 
     private Filter perceptionFilter;
 
@@ -19,6 +19,6 @@ public class Perceive implements Perciever {
 
     @Override
     public Env getInformation(Agent agent) {
-        return EnvironmentManager.getInstance().getFilteredEnvironment(perceptionFilter);
+        return EnvironmentManager.getInstance().getFullEnvironment().applyFilter(perceptionFilter);
     }
 }

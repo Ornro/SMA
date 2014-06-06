@@ -24,6 +24,10 @@ public abstract class InteractiveEnvironmentObject extends LocalizableEnvironmen
         return availableActions;
     }
 
+    public Type getType(){
+        return this.type;
+    }
+
     public long getId(){
         return this.id;
     }

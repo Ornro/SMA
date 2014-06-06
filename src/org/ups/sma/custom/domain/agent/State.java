@@ -1,6 +1,7 @@
 package org.ups.sma.custom.domain.agent;
 
 import org.ups.sma.custom.domain.environnement.Location;
+import org.ups.sma.custom.domain.environnement.objects.Box;
 
 /**
  * The agent state
@@ -11,5 +12,5 @@ public class State {
     public boolean isAlive;
 
     @Public
-    public Boolean holding;
+    public Box boxHolded;
 }

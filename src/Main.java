@@ -1,4 +1,8 @@
 import org.lightcouch.CouchDbClient;
+import java.util.Date;
+
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.ups.sma.custom.domain.environnement.Location;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.Filter;
@@ -60,18 +64,22 @@ public class Main {
 		ctrl.step();
 		ctrl.step();*/
 
-        Agent agent = new Agent(null,null,null,null,null,null,null);
+        Mode mode = Mode.AUTO;
+        boolean isPlaying = true;
+        int delay = 10;
 
-        Filter f = new Filter(agent) {
-            @Override
-            public boolean isAcceptable(Location location) {
-                return ( agent.getLocation() != null );
-            }
-        };
+        Gson gson = new Gson();
+        JsonObject jso = new JsonObject();
+        String state = "undefined";
+        jso.add("mode", gson.toJsonTree(mode.toString().toLowerCase()));
+        if (isPlaying) {
+            state = "play";
+        } else state = "pause";
+        jso.add("state", gson.toJsonTree(state));
+        jso.add("delay", gson.toJsonTree(delay));
 
-        System.out.println(f.isAcceptable(new Location()));
-        agent.setLocation(new Location());
-        System.out.println(f.isAcceptable(new Location()));
+        System.out.println(jso.toString());
+
 
 	}
 
