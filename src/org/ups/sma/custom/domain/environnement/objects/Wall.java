@@ -1,5 +1,6 @@
 package org.ups.sma.custom.domain.environnement.objects;
 
+import org.ups.sma.custom.domain.environnement.Location;
 import org.ups.sma.domain.Action;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 
@@ -11,8 +12,9 @@ import java.util.List;
  */
 public class Wall extends InteractiveEnvironmentObject {
 
-    protected Wall(List<String> availableActions) {
+    protected Wall(Location location, List<String> availableActions) {
         super(availableActions);
+        this.location = location;
     }
 
     //   public Wall() {
