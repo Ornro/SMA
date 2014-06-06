@@ -1,5 +1,6 @@
 import java.util.Date;
 
+import org.json.JSONObject;
 import org.lightcouch.CouchDbClient;
 import org.ups.sma.domain.Mode;
 import org.ups.sma.domain.environnement.Env;
@@ -8,6 +9,9 @@ import org.ups.sma.interfaces.ActionManager;
 import org.ups.sma.interfaces.Actor;
 import org.ups.sma.interfaces.Control;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 
 public class Main {
 
@@ -15,9 +19,13 @@ public class Main {
 
 
 		CouchDbClient dbClient = new CouchDbClient();
-		
 		Env myEnv = new Env();
-		dbClient.save(myEnv);
+		Gson gson = dbClient.getGson();
+		JsonObject jso = new JsonObject();
+		
+		jso.add("_id",gson.toJsonTree("currentEnv"));
+		jso.add("env", gson.toJsonTree(myEnv));
+		dbClient.save(jso);
 		
 		// Test de l'actionEngine
 		

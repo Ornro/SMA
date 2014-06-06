@@ -3,51 +3,55 @@ function UI(){
 	this.timer = null;
 	
 	this.drawer = new Drawer();
+	
+	this.url = "http://localhost:5984/sma/currentEnv"
 } 
 
 UI.prototype.start = function(){
 	
-	// 1. Load initial environnement
-	this._loadInitialState();
-	
-	
-	// 2. Loop 
-	this.timer = window.setInterval((this._loop.bind(this)), 1000);
-	
+	// Loop
+	window.setInterval((this._loop.bind(this)), 1000);
 };
 
+/*
 UI.prototype._loop = function(){
 	
 	// Load new state
 	
-	this.drawer.clearEnv();
+	$.get({
+		url: this.url + this.urlCurrentState,
+		success: function(data){
+		
+			this.drawer.clearEnv();
+			
+			var max = Math.floor(Math.random() * 20);
+			for(var i=0; i<max; i++){
+				var element = {
+					color: '#ff0000',
+					positionX: Math.floor(Math.random() * 30),
+					positionY: Math.floor(Math.random() * 10)
+				};
+				this.drawer.drawCase(element);
+			};
+		},
+		error: function(){
+			alert('Error while loading current state');
+		}
+	});
 	
-	var max = Math.floor(Math.random() * 20);
-	for(var i=0; i<max; i++){
-		var element = {
-			color: '#ff0000',
-			positionX: Math.floor(Math.random() * 30),
-			positionY: Math.floor(Math.random() * 10)
-		};
-		this.drawer.drawCase(element);
-	};
-	
-};
+};*/
 
-UI.prototype._loadInitialState = function(){
+UI.prototype._loop = function(){
 	
-	// Here load json in ajax
+	$.get(this.url, {}, $.noop(), 'jsonp')
 	
-	// STUB
-	var element = {
-		width: 300,
-		height: 100,
-		caseWidth: 10,
-		caseHeight: 10
-	};
+	.done((function(data){
+		this.drawer.refresh(data);	
+	}).bind(this))
 	
-	this.drawer.drawMap(element);
-	
+	.fail(function(){
+		alert('Error while loading initial environnement\n'+this.url);
+	});
 };
 
 

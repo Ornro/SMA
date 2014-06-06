@@ -1,35 +1,11 @@
 function Drawer() {
 
 	this.context = null;
-	this.caseWidth = 0;
-	this.caseHeight = 0;
+	this.caseWidth = 10;
+	this.caseHeight = 10;
 	this.width = 0;
 	this.height = 0;
 }
-
-/**
- * @param {
- * 		width,
- * 		height,
- * 		caseWidth,
- * 		caseHeight
- * }
- */
-Drawer.prototype.drawMap = function(element){
-	
-	this.width = element.width;
-	this.height = element.height;
-	
-	var canvas = document.getElementById('map');
-	canvas.width = this.width;
-	canvas.height = this.height;
-	canvas.style.border = "1px solid black";
-	this.context = canvas.getContext('2d');
-	
-	this.caseWidth = element.caseWidth;
-	this.caseHeight = element.caseHeight;
-	
-};
 
 Drawer.prototype.clearEnv = function(){
 	this.context.clearRect(0,0, this.width, this.height);
@@ -37,18 +13,55 @@ Drawer.prototype.clearEnv = function(){
 
 /**
  * @param {
- * 		color,
- * 		positionX,
- * 		positionY
+ * 		env : {
+ *			size : {
+ *				width,
+ *				height
+ *			},
+ *			map : {
+ *				"1" : [
+ *					{
+ *						location : { x, y }
+ *					}
+ *				]
+ *			}
+ *		}
  * }
  */
-Drawer.prototype.drawCase = function(element){
+Drawer.prototype.refresh = function(data){
+	if(!this.context) this._initContext(data.env.size);
+
+	var cases = [];
+	$.each(data.env.map, function(){
+		cases.push(this[0]);
+	});
 	
-	this.context.fillStyle = element.color;
+	$.each(cases, (function(i, elmt){
+		this._drawCase(elmt);
+	}).bind(this));
+	
+};
+
+Drawer.prototype._drawCase = function(element){
+	
+	this.context.fillStyle = '#009900';
 	this.context.fillRect(
-		element.positionX * this.caseWidth,
-		element.positionY * this.caseHeight,
+		element.location.x * this.caseWidth,
+		element.location.y * this.caseHeight,
 		this.caseWidth,
 		this.caseHeight
 	);
+};
+
+Drawer.prototype._initContext = function(size){
+	
+	this.width = size.width * this.caseWidth;
+	this.height = size.height * this.caseHeight;
+	
+	var canvas = document.getElementById('map');
+	canvas.width = this.width;
+	canvas.height = this.height;
+	canvas.style.border = "1px solid black";
+	this.context = canvas.getContext('2d');
+	
 };
