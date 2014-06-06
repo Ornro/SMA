@@ -5,4 +5,5 @@ package org.ups.sma.custom.domain.environnement;
  */
 public enum Type {
     DEFAULT, AGENT, AGENT_HOLDING, WALL, BOX, STOCK, TAKE;
+
 }

@@ -77,8 +77,9 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 		this.delay = delay;
 	}
 
-	
-	
+    public int getDelay(){ return this.delay; }
+    public Mode getMode(){ return this.currentMode; }
+    public boolean isPlaying(){ return this.isPlaying; }
 
 	
 	@Override

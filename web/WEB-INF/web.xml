@@ -7,11 +7,20 @@
 
     <servlet-mapping>
         <servlet-name>ActionEngineServlet</servlet-name>
-        <url-pattern>/do</url-pattern>
+        <url-pattern>/engine</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DisplayServlet</servlet-name>
+        <url-pattern>/display</url-pattern>
     </servlet-mapping>
 
     <servlet>
         <servlet-name>ActionEngineServlet</servlet-name>
         <servlet-class>org.ups.sma.web.ActionEngineServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DisplayServlet</servlet-name>
+        <servlet-class>org.ups.sma.web.DisplayServlet</servlet-class>
     </servlet>
 </web-app>

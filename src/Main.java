@@ -1,5 +1,7 @@
 import java.util.Date;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import org.ups.sma.custom.domain.environnement.Location;
 import org.ups.sma.domain.Mode;
 import org.ups.sma.domain.environnement.Filter;
@@ -53,9 +55,21 @@ public class Main {
 		ctrl.step();
 		ctrl.step();*/
 
+        Mode mode = Mode.AUTO;
+        boolean isPlaying = true;
+        int delay = 10;
 
-        String uri = "blabla?toto";
-        System.out.println(uri.substring(uri.lastIndexOf("?")+1));
+        Gson gson = new Gson();
+        JsonObject jso = new JsonObject();
+        String state = "undefined";
+        jso.add("mode", gson.toJsonTree(mode.toString().toLowerCase()));
+        if (isPlaying) {
+            state = "play";
+        } else state = "pause";
+        jso.add("state", gson.toJsonTree(state));
+        jso.add("delay", gson.toJsonTree(delay));
+
+        System.out.println(jso.toString());
 
 
 	}
