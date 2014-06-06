@@ -12,9 +12,9 @@ import java.util.ArrayList;
  */
 public class Default extends InteractiveEnvironmentObject {
     public Default(Location location) {
-        super(new ArrayList<Action>());
+        super(new ArrayList<String>());
         this.location = location;
-        this.availableActions.add(new WalkOn());
+        this.availableActions.add("WalkOn");
     }
 
     @Override

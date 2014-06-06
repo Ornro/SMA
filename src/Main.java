@@ -53,18 +53,10 @@ public class Main {
 		ctrl.step();
 		ctrl.step();*/
 
-        Agent agent = new Agent(null,null,null,null,null,null,null);
 
-        Filter f = new Filter(agent) {
-            @Override
-            public boolean isAcceptable(Location location) {
-                return ( agent.getLocation() != null );
-            }
-        };
+        String uri = "blabla?toto";
+        System.out.println(uri.substring(uri.lastIndexOf("?")+1));
 
-        System.out.println(f.isAcceptable(new Location()));
-        agent.setLocation(new Location());
-        System.out.println(f.isAcceptable(new Location()));
 
 	}
 

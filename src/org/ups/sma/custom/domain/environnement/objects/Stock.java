@@ -12,9 +12,9 @@ import java.util.ArrayList;
  */
 public class Stock extends InteractiveEnvironmentObject {
     public Stock(Location location) {
-        super(new ArrayList<Action>());
+        super(new ArrayList<String>());
         this.location = location;
-        this.availableActions.add(new Take());
+        this.availableActions.add("Take");
     }
 
     @Override
