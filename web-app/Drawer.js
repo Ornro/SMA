@@ -7,10 +7,6 @@ function Drawer() {
 	this.height = 0;
 }
 
-Drawer.prototype.clearEnv = function(){
-	this.context.clearRect(0,0, this.width, this.height);
-};
-
 /**
  * @param {
  * 		env : {
@@ -36,10 +32,15 @@ Drawer.prototype.refresh = function(data){
 		cases.push(this[0]);
 	});
 	
+	this._clearEnv();
 	$.each(cases, (function(i, elmt){
 		this._drawCase(elmt);
 	}).bind(this));
 	
+};
+
+Drawer.prototype._clearEnv = function(){
+	this.context.clearRect(0,0, this.width, this.height);
 };
 
 Drawer.prototype._drawCase = function(element){

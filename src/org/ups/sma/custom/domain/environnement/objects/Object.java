@@ -4,6 +4,7 @@ import org.ups.sma.domain.Action;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Custom implementation of an Interactive Environment Object
@@ -12,13 +13,8 @@ import java.util.ArrayList;
  */
 public class Object extends InteractiveEnvironmentObject {
 
-    public Object() {
-        // generate available action
-        super(new ArrayList<Action>());
-
-        // uncomment and fill to add an action that any
-        // agent will be able to perform.
-        // this.availableActions.add();
+    protected Object(List<String> availableActions) {
+        super(availableActions);
     }
 
     @Override

@@ -10,8 +10,6 @@ public class Saver {
     public static void saveCurrentStatus(){
         EnvironmentManager envManager = EnvironmentManager.getInstance();
         Env env = envManager.getFullEnvironment();
-
-
     }
 
 }

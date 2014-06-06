@@ -5,6 +5,7 @@ import org.ups.sma.custom.domain.environnement.Size;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.Stack;
 
 public class Env {
@@ -63,5 +64,16 @@ public class Env {
             return true;
         }
         return false;
+    }
+
+    public Env applyFilter(Filter filter) {
+        Env filteredEnv = new Env(this.size);
+        Set<Map.Entry<Location,Stack<InteractiveEnvironmentObject>>> entries = this.map.entrySet();
+        for (Map.Entry<Location,Stack<InteractiveEnvironmentObject>> entry : entries) {
+            if(filter.isAcceptable(entry.getKey())){
+              filteredEnv.map.put(entry.getKey(),entry.getValue());
+            }
+        }
+        return filteredEnv;
     }
 }

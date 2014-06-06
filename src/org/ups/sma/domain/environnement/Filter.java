@@ -1,6 +1,7 @@
 package org.ups.sma.domain.environnement;
 
 import org.ups.sma.custom.domain.environnement.Location;
+import org.ups.sma.impl.agent.Agent;
 
 import java.util.Stack;
 
@@ -12,6 +13,12 @@ import java.util.Stack;
  * The environment manager will use this interface method to generate
  * parts of the environment that are requested.
  */
-public interface Filter {
-    public boolean isAcceptable(Location location,Stack<InteractiveEnvironmentObject> object);
+public abstract class Filter {
+    protected Agent agent;
+
+    protected Filter(Agent agent){
+        this.agent = agent;
+    }
+
+    public abstract boolean isAcceptable(Location location);
 }
