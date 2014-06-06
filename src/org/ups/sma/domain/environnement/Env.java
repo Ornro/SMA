@@ -76,4 +76,8 @@ public class Env {
         }
         return filteredEnv;
     }
+
+    public InteractiveEnvironmentObject get(Location location){
+        return this.map.get(location).peek();
+    }
 }

@@ -13,4 +13,15 @@ public class State {
 
     @Public
     public Box boxHolded;
+
+    public Location storage;
+    public Location depot;
+    public Location wayToStorage;
+    public Location wayToDepot;
+
+    public boolean goingNorth;
+    public boolean goingSouth;
+
+    public boolean bestIsNorth;
+
 }

@@ -24,6 +24,10 @@ public abstract class InteractiveEnvironmentObject extends LocalizableEnvironmen
         return availableActions;
     }
 
+    public boolean canBeDone( String action ){
+        return this.getAvailableActions().contains(action);
+    }
+
     public Type getType(){
         return this.type;
     }

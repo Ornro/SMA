@@ -1,6 +1,7 @@
 package org.ups.sma.impl.environement;
 
 import org.ups.sma.custom.domain.environnement.Location;
+import org.ups.sma.custom.domain.environnement.Size;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.Filter;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
@@ -16,6 +17,25 @@ import java.util.Stack;
 public final class EnvironmentManager implements IEnvironmentManager {
     private Env environment;
     private static volatile EnvironmentManager instance;
+
+    private EnvironmentManager(){
+        
+    }
+
+    private EnvironmentManager(Size size){
+        environment = new Env(size);
+    }
+
+    public static EnvironmentManager initialize(Size size){
+        if (instance == null) // we try to avoid using synchronized
+        {
+            synchronized (EnvironmentManager.class) {
+                if (instance == null)
+                    instance = new EnvironmentManager(size);
+            }
+        }
+        return instance;
+    }
 
     public static EnvironmentManager getInstance(){
         if (instance == null) // we try to avoid using synchronized
@@ -36,6 +56,10 @@ public final class EnvironmentManager implements IEnvironmentManager {
     @Override
     public void update(InteractiveEnvironmentObject s) {
 
+    }
+
+    public void addObject(Location location, InteractiveEnvironmentObject object){
+        environment.map.get(location).push(object);
     }
 
     public void removeAllObjects(Location location){

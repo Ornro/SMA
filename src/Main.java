@@ -4,7 +4,9 @@ import java.util.Date;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import org.ups.sma.custom.domain.environnement.Location;
+import org.ups.sma.domain.Mode;
 import org.ups.sma.domain.environnement.Env;
+
 import org.ups.sma.domain.environnement.Filter;
 import org.ups.sma.impl.agent.Agent;
 
@@ -12,19 +14,19 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 
+
 public class Main {
 
 	public static void main(String[] args) {
 
-
-		CouchDbClient dbClient = new CouchDbClient();
+		/*CouchDbClient dbClient = new CouchDbClient();
 		Env myEnv = new Env();
 		Gson gson = dbClient.getGson();
 		JsonObject jso = new JsonObject();
 		
 		jso.add("_id",gson.toJsonTree("currentEnv"));
 		jso.add("env", gson.toJsonTree(myEnv));
-		dbClient.save(jso);
+		dbClient.save(jso);*/
 		
 		// Test de l'actionEngine
 		
@@ -79,8 +81,6 @@ public class Main {
         jso.add("delay", gson.toJsonTree(delay));
 
         System.out.println(jso.toString());
-
-
 	}
 
 }
