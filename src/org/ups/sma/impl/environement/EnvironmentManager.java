@@ -29,18 +29,6 @@ public final class EnvironmentManager implements IEnvironmentManager {
     }
 
     @Override
-    public Env getFilteredEnvironment(Filter filter) {
-        Env filteredEnv = new Env(this.environment.size);
-        Set<Map.Entry<Location,Stack<InteractiveEnvironmentObject>>> entries = this.environment.map.entrySet();
-        for (Map.Entry<Location,Stack<InteractiveEnvironmentObject>> entry : entries) {
-            if(filter.isAcceptable(entry.getKey(),entry.getValue())){
-                filteredEnv.map.put(entry.getKey(),entry.getValue());
-            }
-        }
-        return filteredEnv;
-    }
-
-    @Override
     public Env getFullEnvironment() {
         return environment;
     }
@@ -66,6 +54,26 @@ public final class EnvironmentManager implements IEnvironmentManager {
 
     public void replace(Location location, Stack<InteractiveEnvironmentObject> object){
         this.environment.map.put(location,object);
+    }
+
+    public long getNextId(){
+        long id = 0l;
+        Set<Map.Entry<Location,Stack<InteractiveEnvironmentObject>>> entries = this.environment.map.entrySet();
+        for (Map.Entry<Location,Stack<InteractiveEnvironmentObject>> entry : entries){
+            long tmp = getHighestId(entry.getValue());
+            if (id < tmp) id = tmp;
+        }
+
+        return id;
+    }
+
+    private long getHighestId(Stack<InteractiveEnvironmentObject> objects){
+        long id = 0l;
+        for (int i=0;i<objects.size();i++){
+            long tmp = objects.get(i).getId();
+            if ( id < tmp) id = tmp;
+        }
+        return id;
     }
 
 }

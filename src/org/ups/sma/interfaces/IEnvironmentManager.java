@@ -10,7 +10,6 @@ public interface IEnvironmentManager {
 	 * et retourne l'environnement partiel lis à la demande
 	 */
     // to edit
-	public Env getFilteredEnvironment(Filter filter);
 	public Env getFullEnvironment();
 	public void update(InteractiveEnvironmentObject s);
 }

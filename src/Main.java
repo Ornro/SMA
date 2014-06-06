@@ -1,7 +1,10 @@
 import java.util.Date;
 
+import org.ups.sma.custom.domain.environnement.Location;
 import org.ups.sma.domain.Mode;
+import org.ups.sma.domain.environnement.Filter;
 import org.ups.sma.impl.actionengine.ActionEngine;
+import org.ups.sma.impl.agent.Agent;
 import org.ups.sma.interfaces.ActionManager;
 import org.ups.sma.interfaces.Actor;
 import org.ups.sma.interfaces.Control;
@@ -14,7 +17,7 @@ public class Main {
 		
 		// Test de l'actionEngine
 		
-		ActionManager am = ActionEngine.getInstance();
+		/*ActionManager am = ActionEngine.getInstance();
 		
 		Control ctrl = ActionEngine.getInstance();
 		
@@ -48,9 +51,21 @@ public class Main {
 
 		ctrl.step();
 		ctrl.step();
-		ctrl.step();
-		
-		
+		ctrl.step();*/
+
+        Agent agent = new Agent(null,null,null,null,null,null,null);
+
+        Filter f = new Filter(agent) {
+            @Override
+            public boolean isAcceptable(Location location) {
+                return ( agent.getLocation() != null );
+            }
+        };
+
+        System.out.println(f.isAcceptable(new Location()));
+        agent.setLocation(new Location());
+        System.out.println(f.isAcceptable(new Location()));
+
 	}
 
 }

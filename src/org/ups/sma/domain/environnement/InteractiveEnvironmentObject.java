@@ -1,17 +1,17 @@
 package org.ups.sma.domain.environnement;
 
-import org.ups.sma.custom.domain.environnement.DrawInformation;
-import org.ups.sma.domain.Action;
-import org.ups.sma.impl.environement.interfaces.Drawable;
+
+import org.ups.sma.custom.domain.environnement.Type;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class InteractiveEnvironmentObject extends LocalizableEnvironmentObject implements Drawable{
-    protected List<Action> availableActions = new ArrayList<Action>();
-    protected DrawInformation drawInformation = null;
+public abstract class InteractiveEnvironmentObject extends LocalizableEnvironmentObject{
+    protected List<String> availableActions = new ArrayList<String>();
+    protected long id;
+    protected Type type;
 
-    protected InteractiveEnvironmentObject(List<Action> availableActions) {
+    protected InteractiveEnvironmentObject(List<String> availableActions) {
         super();
         this.availableActions = availableActions;
     }
@@ -20,32 +20,12 @@ public abstract class InteractiveEnvironmentObject extends LocalizableEnvironmen
      * If null is returned then the object is not drawable
      * @return
      */
-    public DrawInformation getDrawInformation(){
-        return drawInformation;
-    }
-
-    public List<Action> getAvailableActions(){
+    public List<String> getAvailableActions(){
         return availableActions;
     }
 
-    public List<Action> getPerceptiveActions(){
-        List<Action> actions = new ArrayList<Action>();
-
-        for (Action a : availableActions){
-            if (a.type == Action.ActionType.PERCEPTIVE) actions.add(a);
-        }
-
-        return actions;
-    }
-
-    public List<Action> getActiveActions(){
-        List<Action> actions = new ArrayList<Action>();
-
-        for (Action a : availableActions){
-            if (a.type == Action.ActionType.ACTIVE) actions.add(a);
-        }
-
-        return actions;
+    public long getId(){
+        return this.id;
     }
 
     /**
