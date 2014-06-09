@@ -19,7 +19,7 @@ public class Env {
      */
     public Env() {
         this.map = new HashMap<Location,Stack<InteractiveEnvironmentObject>>();
-        this.size = new Size();
+        this.size = null;
     }
 
     // Constructor that is safe to use.
@@ -51,8 +51,12 @@ public class Env {
      * of two sizes is bigger which may be complicated.
      */
     public boolean merge(Env other){
+        if (this.size == null) {
+            this.size = other.size;
+        }
 
-        if (this.size == null || this.size.equals(other.size)){
+        if (this.size.equals(other.size)){
+
             for (Location l : other.map.keySet()) {
                 Stack current = this.map.get(l);
 

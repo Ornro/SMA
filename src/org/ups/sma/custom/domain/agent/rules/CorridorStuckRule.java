@@ -20,6 +20,7 @@ public class CorridorStuckRule extends Rule {
 
     @Override
     public List<Choice> choices(Agent a) {
+        System.out.println("stuck corr Rule");
         return new ArrayList<Choice>();
     }
 }

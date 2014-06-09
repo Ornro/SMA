@@ -20,6 +20,7 @@ public class CorridorEncounterRule extends Rule {
 
     @Override
     public List<Choice> choices(Agent a) {
+        System.out.println("encount corr Rule");
         List<Choice> choices = new ArrayList<Choice>();
         choices.add(DecisionUtils.moveBack(a));
         return choices;

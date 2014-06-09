@@ -18,6 +18,7 @@ public class MoveForwardBlockedRule extends Rule {
 
     @Override
     public List<Choice> choices(Agent a) {
+        System.out.println("move blocked Rule");
         List<Choice> choices = new ArrayList<Choice>();
         choices.add(DecisionUtils.getRandomMove(a));
         return choices;

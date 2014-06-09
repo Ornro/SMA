@@ -18,6 +18,7 @@ public class GetRule extends Rule {
 
     @Override
     public List<Choice> choices(Agent a) {
+        System.out.println("get Rule");
         List<Choice> choices = new ArrayList<Choice>();
         choices.add(DecisionUtils.get(a));
         return choices;

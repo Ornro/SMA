@@ -18,6 +18,7 @@ public class MoveForwardRule extends Rule {
 
     @Override
     public List<Choice> choices(Agent a) {
+        System.out.println("move Rule");
         List<Choice> choices = new ArrayList<Choice>();
         choices.add(DecisionUtils.moveForward(a));
         System.out.println(choices);

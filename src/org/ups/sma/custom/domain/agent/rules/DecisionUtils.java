@@ -20,9 +20,6 @@ public class DecisionUtils {
         Env perceivedEnvironment = a.getState().partialEnvironment;
         Location loc = new Location(a.getLocation().x,a.getLocation().y);
         loc.y++;
-        System.out.println(loc);
-        //System.out.println(perceivedEnvironment.map);
-        //System.out.println(EnvironmentManager.getInstance().getFullEnvironment().map);
         InteractiveEnvironmentObject object = perceivedEnvironment.get(loc);
 
         if (object != null && (object.is("Wall") || loc.y>perceivedEnvironment.size.height)){
@@ -75,6 +72,7 @@ public class DecisionUtils {
         Env perceivedEnvironment = a.getState().partialEnvironment;
         Stack<InteractiveEnvironmentObject> ieo = perceivedEnvironment.map.get(location);
         if (ieo == null) return false;
+        if (ieo.peek().getAvailableActions() == null) return false;
 
         return location.y < perceivedEnvironment.size.height && location.x < perceivedEnvironment.size.width && ieo.peek().getAvailableActions().contains("WalkOn");
     }

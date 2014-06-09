@@ -20,6 +20,7 @@ public class CorridorFreeRule extends Rule {
 
     @Override
     public List<Choice> choices(Agent a) {
+        System.out.println("free corr Rule");
         List<Choice> choices = new ArrayList<Choice>();
         choices.add(DecisionUtils.moveForward(a));
         return choices;

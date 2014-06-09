@@ -18,6 +18,7 @@ public class DumpRule extends Rule {
 
     @Override
     public List<Choice> choices(Agent a) {
+        System.out.println("dump Rule");
         List<Choice> choices = new ArrayList<Choice>();
         choices.add(DecisionUtils.dump(a));
         return choices;

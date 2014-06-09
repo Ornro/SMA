@@ -19,6 +19,7 @@ public class SurroundedByWallsRule extends Rule {
 
     @Override
     public List<Choice> choices(Agent a) {
+        System.out.println("Surr by walls Rule");
         List<Choice> choices = new ArrayList<Choice>();
         choices.add(new Choice(new Suicide(),a));
         return choices;

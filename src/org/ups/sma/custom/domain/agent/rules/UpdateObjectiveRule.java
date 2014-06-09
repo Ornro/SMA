@@ -18,6 +18,7 @@ public class UpdateObjectiveRule extends Rule {
 
     @Override
     public List<Choice> choices(Agent a) {
+        System.out.println("update Objective Rule");
         DecisionUtils.setLongTermObjectiveToDepot(a);
         return new ArrayList<Choice>();
     }

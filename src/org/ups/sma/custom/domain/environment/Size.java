@@ -10,12 +10,6 @@ public class Size {
     public int width;
     public int height;
 
-    // default constructor is adviced but not mandatory.
-    public Size() {
-        this.height = 100;
-        this.width = 100;
-    }
-
     // implement your own constructor
     public Size(int width, int height) {
         this.width = width;
@@ -41,5 +35,10 @@ public class Size {
         int result = width;
         result = 31 * result + height;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "width="+width+", height="+height;
     }
 }

@@ -18,6 +18,7 @@ public class UpdateWayPointRule extends Rule {
 
     @Override
     public List<Choice> choices(Agent a) {
+        System.out.println("update Waypoint Rule");
         DecisionUtils.setWayPoint(a);
         return new ArrayList<Choice>();
     }

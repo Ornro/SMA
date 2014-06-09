@@ -22,6 +22,5 @@ public class PerceptionFilter extends Filter {
         int minX=aloc.x-3;
 
         return location.x<=maxX && location.x>=minX && location.y>=minY && location.y<=maxY;
-
     }
 }
