@@ -44,15 +44,13 @@ public class Decider {
         Set<Map.Entry<Location,Stack<InteractiveEnvironmentObject>>> entries = env.map.entrySet();
 
         for (Map.Entry<Location,Stack<InteractiveEnvironmentObject>> entry : entries ){
-            Stack<InteractiveEnvironmentObject> objects = entry.getValue();
-            for (InteractiveEnvironmentObject object : objects){
-                List<Action> actions = joinAndInstantiate(agent.getAbilities(), object.getAvailableActions());
-                for (Action action : actions){
-                    if (agent.getAbilities().contains(action.toString())){
-                        moves.add(new Choice(action,object));
-                    }
-
+            InteractiveEnvironmentObject object = entry.getValue().peek();
+            List<Action> actions = joinAndInstantiate(agent.getAbilities(), object.getAvailableActions());
+            for (Action action : actions){
+                if (agent.getAbilities().contains(action.toString())){
+                    moves.add(new Choice(action,object));
                 }
+
             }
         }
 

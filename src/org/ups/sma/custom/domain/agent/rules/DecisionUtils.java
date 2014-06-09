@@ -128,14 +128,17 @@ public class DecisionUtils {
 
     public static boolean isSurroundedByWalls(Agent a){
         Env env = a.getState().partialEnvironment;
-        Location loc = a.getLocation();
+        Location loc = new Location(a.getLocation().x,a.getLocation().y);
         loc.x ++;
         if (env.get(loc) != null && !env.get(loc).is("Wall")) return false;
+        loc.x--;
         loc.y ++;
         if (env.get(loc) != null && !env.get(loc).is("Wall")) return false;
-        loc.x -= 2;
+        loc.y --;
+        loc.x --;
         if (env.get(loc) != null && !env.get(loc).is("Wall")) return false;
-        loc.y -= 2;
+        loc.x ++;
+        loc.y --;
         return env.get(loc) != null && env.get(loc).is("Wall");
     }
 

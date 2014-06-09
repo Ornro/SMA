@@ -13,7 +13,7 @@ import java.util.List;
 public class MoveForwardBlockedRule extends Rule {
     @Override
     public boolean condition(Agent a) {
-        return !DecisionUtils.canMoveForward(a) && !DecisionUtils.isInCorridor(a) && !DecisionUtils.canDump(a) && !DecisionUtils.canGet(a) && DecisionUtils.canMove(a);
+        return !DecisionUtils.canMoveForward(a) && !DecisionUtils.isInCorridor(a) && !(DecisionUtils.canDump(a) && DecisionUtils.isBoxHeld(a)) && !(DecisionUtils.canGet(a) && !DecisionUtils.isBoxHeld(a));
     }
 
     @Override

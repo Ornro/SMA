@@ -13,7 +13,7 @@ import java.util.List;
 public class MoveForwardRule extends Rule {
     @Override
     public boolean condition(Agent a) {
-        return DecisionUtils.canMoveForward(a) && !DecisionUtils.isInCorridor(a) && !DecisionUtils.canDump(a) && !DecisionUtils.canGet(a);
+        return DecisionUtils.canMoveForward(a) && !DecisionUtils.isInCorridor(a) && !(DecisionUtils.canDump(a) && DecisionUtils.isBoxHeld(a)) && !(DecisionUtils.canGet(a) && !DecisionUtils.isBoxHeld(a));
     }
 
     @Override
@@ -21,7 +21,6 @@ public class MoveForwardRule extends Rule {
         System.out.println("move Rule");
         List<Choice> choices = new ArrayList<Choice>();
         choices.add(DecisionUtils.moveForward(a));
-        System.out.println(choices);
         return choices;
     }
 }

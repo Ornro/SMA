@@ -15,15 +15,6 @@ public class Wall extends InteractiveEnvironmentObject {
         super(new ArrayList<String>(), location);
     }
 
-    //   public Wall() {
-        // this means no actions are available on a wall
-        //super(new ArrayList<Action>());
-
-        // uncomment and fill to add an action that any
-        // agent will be able to perform.
-        // this.availableActions.add();
-   // }
-
     @Override
     public void destroy() {
 

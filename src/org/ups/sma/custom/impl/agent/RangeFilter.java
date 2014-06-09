@@ -14,11 +14,7 @@ public class RangeFilter extends Filter {
     @Override
     public boolean isAcceptable(Location location, Agent agent) {
         Location aloc = agent.getLocation();
-        int maxX=aloc.x+1;
-        int maxY=aloc.y+1;
-        int minY=aloc.y-1;
-        int minX=aloc.x-1;
+        return (location.x == aloc.x+1 || location.x == aloc.x-1 || location.y == aloc.y-1 || location.y == aloc.y+1);
 
-        return location.x<=maxX && location.x>=minX && location.y>=minY && location.y<=maxY;
     }
 }

@@ -77,7 +77,6 @@ public class Agent extends InteractiveEnvironmentObject implements Stateful, Act
 
     @Override
     public void act() {
-        System.out.println("Agent is acting");
         Env perceivedEnvironment = perceiver.getInformation(this);
 
         this.state.partialEnvironment.merge(perceivedEnvironment);
