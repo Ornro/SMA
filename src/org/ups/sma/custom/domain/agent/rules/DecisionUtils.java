@@ -9,6 +9,7 @@ import org.ups.sma.impl.agent.Agent;
 import org.ups.sma.impl.agent.impl.Decider;
 import org.ups.sma.impl.environment.EnvironmentManager;
 
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -17,8 +18,11 @@ import java.util.Stack;
 public class DecisionUtils {
 
     public static boolean isInCorridor(Agent a){
-        Env perceivedEnvironment = a.getState().partialEnvironment;
-        Location loc = new Location(a.getLocation().x,a.getLocation().y);
+        return isInCorridor(a.getLocation(),a.getState().partialEnvironment);
+    }
+
+    public static boolean isInCorridor(Location loca, Env perceivedEnvironment){
+        Location loc = new Location(loca.x,loca.y);
         loc.y++;
         InteractiveEnvironmentObject object = perceivedEnvironment.get(loc);
 
@@ -29,6 +33,20 @@ public class DecisionUtils {
                 return true;
             }
         }
+        return false;
+    }
+
+    public static boolean wasInCorridor(Agent a){
+        return a.getState().wasInCorridor;
+    }
+
+    public static boolean isCorridorEntrance(Agent a){
+        if (isInCorridor(a)) return false;
+        Location loc = new Location(a.getLocation().x,a.getLocation().y);
+        loc.x++;
+        if (isInCorridor(loc,a.getState().partialEnvironment)) return true;
+        loc.x -= 2;
+        if (isInCorridor(loc,a.getState().partialEnvironment)) return true;
         return false;
     }
 
@@ -118,8 +136,10 @@ public class DecisionUtils {
     }
 
     public static Choice getRandomMove(Agent agent){
-        return Decider.getChoicesInvolvingAction("WalkOn", agent).get(0);
-
+        List<Choice> choices = Decider.getChoicesInvolvingAction("WalkOn", agent);
+        double f = Math.random();
+        Double d = f*choices.size();
+        return choices.get(d.intValue());
     }
 
     public static boolean canMove(Agent agent){

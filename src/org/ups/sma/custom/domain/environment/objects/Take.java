@@ -12,6 +12,7 @@ import java.util.List;
 public class Take extends InteractiveEnvironmentObject {
     public Take(Location location) {
         super(new ArrayList<String>(), location);
+        this.availableActions.add("WalkOn");
     }
 
     @Override

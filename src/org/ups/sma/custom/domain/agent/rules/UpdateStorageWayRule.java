@@ -1,5 +1,6 @@
 package org.ups.sma.custom.domain.agent.rules;
 
+import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.domain.Choice;
 import org.ups.sma.domain.environment.Rule;
 import org.ups.sma.impl.agent.Agent;
@@ -8,20 +9,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Ben on 07/06/14.
+ * Created by Ben on 10/06/14.
  */
-public class CorridorStuckRule extends Rule {
+public class UpdateStorageWayRule extends Rule{
 
-    // if in corridor and stuck don't do anything
     @Override
     public boolean condition(Agent a) {
-        return DecisionUtils.isInCorridor(a) && DecisionUtils.isRobotInFront(a) && !DecisionUtils.canMoveBack(a);
+        return !DecisionUtils.isBoxHeld(a) && DecisionUtils.isCorridorEntrance(a) && !DecisionUtils.wasInCorridor(a);
     }
 
     @Override
     public List<Choice> choices(Agent a) {
-        a.getState().wasInCorridor = true;
-        System.out.println("stuck corr Rule");
+        System.out.println("update StorageWay");
+        a.getState().wayToStorage = new Location(a.getLocation().x,a.getLocation().y);
         return new ArrayList<Choice>();
     }
 }

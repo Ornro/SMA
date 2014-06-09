@@ -14,7 +14,17 @@ public class RangeFilter extends Filter {
     @Override
     public boolean isAcceptable(Location location, Agent agent) {
         Location aloc = agent.getLocation();
-        return (location.x == aloc.x+1 || location.x == aloc.x-1 || location.y == aloc.y-1 || location.y == aloc.y+1);
+
+        if(location.x == aloc.x+1 && location.y == aloc.y){
+            return true;
+        } else if (location.x == aloc.x-1 && location.y == aloc.y){
+            return true;
+        } else if (location.y == aloc.y-1 && location.x == aloc.x) {
+            return true;
+        } else if (location.y == aloc.y+1 && location.x == aloc.x){
+            return true;
+        }
+        return false;
 
     }
 }

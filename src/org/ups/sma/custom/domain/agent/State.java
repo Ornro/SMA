@@ -23,8 +23,6 @@ public class State {
     public Location longTermGoal= null;
     public Location waypoint= null;
 
-    public boolean goingNorth = false;
-    public boolean goingSouth = false;
-    public boolean bestIsNorth = false;
-
+    public boolean wasInCorridor = false;
+    public boolean isGoingBack = false;
 }
