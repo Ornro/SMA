@@ -1,8 +1,5 @@
 package org.ups.sma.web;
 
-import org.ups.sma.impl.bootstrap.Bootstrap;
-import org.ups.sma.impl.environement.EnvironmentManager;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

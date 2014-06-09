@@ -3,7 +3,7 @@ package org.ups.sma.custom.domain.agent.rules;
 import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.domain.Action;
 import org.ups.sma.domain.Choice;
-import org.ups.sma.domain.environnement.Env;
+import org.ups.sma.domain.environment.Env;
 import org.ups.sma.impl.agent.Agent;
 import org.ups.sma.impl.agent.impl.Decider;
 

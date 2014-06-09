@@ -1,13 +1,10 @@
 package org.ups.sma.impl.agent.impl;
 
-import org.ups.sma.domain.Action;
 import org.ups.sma.domain.Choice;
-import org.ups.sma.domain.environnement.Filter;
-import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
+import org.ups.sma.domain.environment.Filter;
 import org.ups.sma.impl.agent.Agent;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Ben on 24/05/14.
@@ -15,6 +12,11 @@ import java.util.Map;
 public class Effector {
     private Filter range;
     private List<String> abilities;
+
+    public Effector(Filter range, List<String> abilities) {
+        this.range = range;
+        this.abilities = abilities;
+    }
 
     public void execute(List<Choice> choices, Agent agent) {
         for (Choice c : choices){

@@ -3,9 +3,9 @@ package org.ups.sma.impl.agent.impl;
 import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.domain.Action;
 import org.ups.sma.domain.Choice;
-import org.ups.sma.domain.environnement.Env;
-import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
-import org.ups.sma.domain.environnement.Rule;
+import org.ups.sma.domain.environment.Env;
+import org.ups.sma.domain.environment.InteractiveEnvironmentObject;
+import org.ups.sma.domain.environment.Rule;
 import org.ups.sma.impl.agent.Agent;
 
 import java.util.*;

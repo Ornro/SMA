@@ -1,7 +1,7 @@
 package org.ups.sma.dao;
 
 import com.google.gson.*;
-import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
+import org.ups.sma.domain.environment.InteractiveEnvironmentObject;
 
 import java.lang.reflect.Type;
 

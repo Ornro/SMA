@@ -1,16 +1,12 @@
 package org.ups.sma.impl.saver;
 
 import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
 import org.lightcouch.CouchDbClient;
-import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.dao.EnvAdapter;
 import org.ups.sma.dao.IEOAdapter;
-import org.ups.sma.domain.environnement.Env;
-import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
-import org.ups.sma.impl.environement.EnvironmentManager;
-
-import java.io.InputStream;
+import org.ups.sma.domain.environment.Env;
+import org.ups.sma.domain.environment.InteractiveEnvironmentObject;
+import org.ups.sma.impl.environment.EnvironmentManager;
 
 /**
  * Created by Ben on 29/05/14.

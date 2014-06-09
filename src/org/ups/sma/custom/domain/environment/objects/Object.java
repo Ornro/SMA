@@ -1,6 +1,6 @@
 package org.ups.sma.custom.domain.environment.objects;
 
-import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
+import org.ups.sma.domain.environment.InteractiveEnvironmentObject;
 
 import java.util.List;
 

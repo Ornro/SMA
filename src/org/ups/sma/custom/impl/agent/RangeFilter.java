@@ -1,7 +1,7 @@
-package org.ups.sma.custom.impl.environment;
+package org.ups.sma.custom.impl.agent;
 
 import org.ups.sma.custom.domain.environment.Location;
-import org.ups.sma.domain.environnement.Filter;
+import org.ups.sma.domain.environment.Filter;
 import org.ups.sma.impl.agent.Agent;
 
 /**

@@ -1,11 +1,11 @@
-package org.ups.sma.impl.environement;
+package org.ups.sma.impl.environment;
 
 import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.custom.domain.environment.Size;
 import org.ups.sma.custom.domain.environment.Type;
 import org.ups.sma.custom.domain.environment.objects.Default;
-import org.ups.sma.domain.environnement.Env;
-import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
+import org.ups.sma.domain.environment.Env;
+import org.ups.sma.domain.environment.InteractiveEnvironmentObject;
 import org.ups.sma.interfaces.IEnvironmentManager;
 
 import java.util.ArrayList;

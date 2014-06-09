@@ -1,9 +1,9 @@
 package org.ups.sma.impl.agent.impl;
 
-import org.ups.sma.domain.environnement.Env;
-import org.ups.sma.domain.environnement.Filter;
+import org.ups.sma.domain.environment.Env;
+import org.ups.sma.domain.environment.Filter;
 import org.ups.sma.impl.agent.Agent;
-import org.ups.sma.impl.environement.EnvironmentManager;
+import org.ups.sma.impl.environment.EnvironmentManager;
 
 /**
  * Created by Ben on 24/05/14.

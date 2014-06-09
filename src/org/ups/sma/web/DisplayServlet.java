@@ -5,17 +5,16 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.custom.domain.environment.Type;
-import org.ups.sma.domain.environnement.Env;
-import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
+import org.ups.sma.domain.environment.Env;
+import org.ups.sma.domain.environment.InteractiveEnvironmentObject;
 import org.ups.sma.impl.bootstrap.Bootstrap;
-import org.ups.sma.impl.environement.EnvironmentManager;
+import org.ups.sma.impl.environment.EnvironmentManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.*;
 
 /**

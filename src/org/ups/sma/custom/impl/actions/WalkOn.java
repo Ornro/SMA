@@ -1,12 +1,9 @@
 package org.ups.sma.custom.impl.actions;
 
 import org.ups.sma.domain.Action;
-import org.ups.sma.domain.environnement.Env;
-import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
+import org.ups.sma.domain.environment.InteractiveEnvironmentObject;
 import org.ups.sma.impl.agent.Agent;
-import org.ups.sma.impl.environement.EnvironmentManager;
-
-import java.util.Stack;
+import org.ups.sma.impl.environment.EnvironmentManager;
 
 public class WalkOn extends Action {
 

@@ -1,6 +1,6 @@
 package org.ups.sma.domain;
 
-import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
+import org.ups.sma.domain.environment.InteractiveEnvironmentObject;
 
 /**
  * Created by Ben on 07/06/14.

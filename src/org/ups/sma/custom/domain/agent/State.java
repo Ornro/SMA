@@ -2,7 +2,7 @@ package org.ups.sma.custom.domain.agent;
 
 import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.custom.domain.environment.objects.Box;
-import org.ups.sma.domain.environnement.Env;
+import org.ups.sma.domain.environment.Env;
 
 /**
  * The agent state

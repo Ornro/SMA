@@ -2,7 +2,7 @@ package org.ups.sma.custom.domain.agent.rules;
 
 import org.ups.sma.custom.impl.actions.Suicide;
 import org.ups.sma.domain.Choice;
-import org.ups.sma.domain.environnement.Rule;
+import org.ups.sma.domain.environment.Rule;
 import org.ups.sma.impl.agent.Agent;
 
 import java.util.ArrayList;

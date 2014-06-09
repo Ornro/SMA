@@ -1,4 +1,4 @@
-package org.ups.sma.domain.environnement;
+package org.ups.sma.domain.environment;
 
 import org.ups.sma.domain.Choice;
 import org.ups.sma.impl.agent.Agent;
