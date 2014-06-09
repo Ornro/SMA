@@ -20,6 +20,7 @@ public class MoveForwardRule extends Rule {
     public List<Choice> choices(Agent a) {
         List<Choice> choices = new ArrayList<Choice>();
         choices.add(DecisionUtils.moveForward(a));
+        System.out.println(choices);
         return choices;
     }
 }

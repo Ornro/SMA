@@ -9,6 +9,8 @@ import org.ups.sma.impl.agent.Agent;
 import org.ups.sma.impl.agent.impl.Decider;
 import org.ups.sma.impl.environment.EnvironmentManager;
 
+import java.util.Stack;
+
 /**
  * Created by Ben on 07/06/14.
  */
@@ -71,8 +73,10 @@ public class DecisionUtils {
 
     public static boolean canMoveOn(Location location, Agent a){
         Env perceivedEnvironment = a.getState().partialEnvironment;
+        Stack<InteractiveEnvironmentObject> ieo = perceivedEnvironment.map.get(location);
+        if (ieo == null) return false;
 
-        return !(location.y > perceivedEnvironment.size.height || location.y < perceivedEnvironment.size.height || location.x < perceivedEnvironment.size.width || location.x > perceivedEnvironment.size.width) && perceivedEnvironment.map.get(location).peek().getAvailableActions().contains("WalkOn");
+        return location.y < perceivedEnvironment.size.height && location.x < perceivedEnvironment.size.width && ieo.peek().getAvailableActions().contains("WalkOn");
     }
 
     public static boolean canMoveBack(Agent a) {

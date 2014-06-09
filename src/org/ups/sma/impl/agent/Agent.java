@@ -78,14 +78,10 @@ public class Agent extends InteractiveEnvironmentObject implements Stateful, Act
     @Override
     public void act() {
         System.out.println("Agent is acting");
-
         Env perceivedEnvironment = perceiver.getInformation(this);
-
         this.state.partialEnvironment.merge(perceivedEnvironment);
-
         List<Choice> actionsToExecute = decider.getNextMove(this);
         logAgentActions(actionsToExecute);
-
         effector.execute(actionsToExecute,this);
     }
 
@@ -93,7 +89,7 @@ public class Agent extends InteractiveEnvironmentObject implements Stateful, Act
         for (Choice c : choices){
             Action a = c.getAction();
             InteractiveEnvironmentObject object = c.getObject();
-            LOGGER.info("Agent "+id+" will execute "+a+" on "+object);
+            LOGGER.info("Agent "+id+" will execute "+a+" on "+object.getType());
         }
     }
 
@@ -115,3 +111,4 @@ public class Agent extends InteractiveEnvironmentObject implements Stateful, Act
         return null;
     }
 }
+

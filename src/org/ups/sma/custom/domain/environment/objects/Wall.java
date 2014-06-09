@@ -3,6 +3,7 @@ package org.ups.sma.custom.domain.environment.objects;
 import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.domain.environment.InteractiveEnvironmentObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,8 +11,8 @@ import java.util.List;
  */
 public class Wall extends InteractiveEnvironmentObject {
 
-    public Wall(Location location, List<String> availableActions) {
-        super(availableActions, location);
+    public Wall(Location location) {
+        super(new ArrayList<String>(), location);
     }
 
     //   public Wall() {

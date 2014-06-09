@@ -92,9 +92,7 @@ public class Bootstrap {
         for(int i=0; i<sizeEnv.width; i++) {
             for(int j=0; j<sizeEnv.height; j++) {
                 Location location = new Location(i,j);
-                List<String> slist = new ArrayList<String>();
-                slist.add("WalkOn");
-                Default def = new Default(location, slist);
+                Default def = new Default(location);
                 def.setType(Type.DEFAULT);
             }
         }
@@ -106,11 +104,9 @@ public class Bootstrap {
         for(int i=0; i<zoneStock.width; i++) {
             for(int j=0; j<zoneStock.height; j++) {
                 Location location = new Location(i,j+(env.size.height - zoneStock.height)/2);
-                ArrayList<String> actions = new ArrayList<String>();
-                actions.add("Get");
-                Take take = new Take(location, null);
+                Take take = new Take(location);
                 take.setType(Type.TAKE);
-                Box box = new Box(location, actions);
+                Box box = new Box(location);
                 box.setType(Type.BOX);
             }
         }
@@ -118,21 +114,19 @@ public class Bootstrap {
         for(int i=0; i<zoneDepot.width; i++) {
             for(int j=0; j<zoneDepot.height; j++) {
                 Location location = new Location(i+(env.size.width - zoneDepot.width),j+(env.size.height - zoneStock.height)/2);
-                ArrayList<String> actions = new ArrayList<String>();
-                actions.add("Dump");
-                Stock stock = new Stock(location, actions);
+                Stock stock = new Stock(location);
                 stock.setType(Type.STOCK);
             }
         }
 
         int yCorridor1 = 10;
-        int yCorridor2 = 15;
+        int yCorridor2 = 20;
         for(int i=0; i<zoneWall.height; i++) {
             if(i==yCorridor1 || i==yCorridor2) continue;
 
             for(int j=0;j<zoneWall.width;j++){
                 Location location = new Location(j+(sizeEnv.width - zoneWall.width) / 2, i);
-                Wall wall = new Wall(location, new ArrayList<String>());
+                Wall wall = new Wall(location);
                 wall.setType(Type.WALL);
             }
         }
