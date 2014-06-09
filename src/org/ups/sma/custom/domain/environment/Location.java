@@ -1,5 +1,7 @@
 package org.ups.sma.custom.domain.environment;
 
+import com.google.gson.Gson;
+
 /**
  * Created by Ben on 24/05/14.
  */
@@ -34,5 +36,10 @@ public class Location {
         int result = x;
         result = 31 * result + y;
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return x+"@"+y;
     }
 }

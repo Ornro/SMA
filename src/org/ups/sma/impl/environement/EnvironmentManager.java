@@ -21,16 +21,16 @@ public final class EnvironmentManager implements IEnvironmentManager {
         
     }
 
-    private EnvironmentManager(Size size){
-        environment = new Env(size);
+    private EnvironmentManager(Env env){
+        environment = env;
     }
 
-    public static EnvironmentManager initialize(Size size){
+    public static EnvironmentManager initialize(Env env){
         if (instance == null) // we try to avoid using synchronized
         {
             synchronized (EnvironmentManager.class) {
                 if (instance == null)
-                    instance = new EnvironmentManager(size);
+                    instance = new EnvironmentManager(env);
             }
         }
         return instance;

@@ -2,6 +2,7 @@ package org.ups.sma.domain.environnement;
 
 import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.custom.domain.environment.Size;
+import org.ups.sma.impl.agent.Agent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,11 +67,11 @@ public class Env {
         return false;
     }
 
-    public Env applyFilter(Filter filter) {
+    public Env applyFilter(Filter filter, Agent agent) {
         Env filteredEnv = new Env(this.size);
         Set<Map.Entry<Location,Stack<InteractiveEnvironmentObject>>> entries = this.map.entrySet();
         for (Map.Entry<Location,Stack<InteractiveEnvironmentObject>> entry : entries) {
-            if(filter.isAcceptable(entry.getKey())){
+            if(filter.isAcceptable(entry.getKey(),agent)){
               filteredEnv.map.put(entry.getKey(),entry.getValue());
             }
         }

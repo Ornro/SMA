@@ -8,6 +8,7 @@ import org.ups.sma.domain.Choice;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.Filter;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
+import org.ups.sma.domain.environnement.Rule;
 import org.ups.sma.impl.actionengine.ActionEngine;
 import org.ups.sma.impl.agent.interfaces.Decider;
 import org.ups.sma.impl.agent.interfaces.Effector;
@@ -35,8 +36,9 @@ public class Agent extends InteractiveEnvironmentObject implements Stateful, Act
     private Logger LOGGER = Logger.getLogger(Agent.class.getName() + id);
     private List<String> abilities;
     private Filter range;
+    private List<Rule> rules;
 
-    public Agent(State state, Effector effector, Perciever perciever, Decider decider, List<String> availableActions ,List<String> abilities, Filter range) {
+    public Agent(State state, Effector effector, Perciever perciever, Decider decider, List<String> availableActions ,List<String> abilities, Filter range, List<Rule> rules) {
         super(availableActions);
         this.state = state;
         this.effector = effector;
@@ -44,6 +46,7 @@ public class Agent extends InteractiveEnvironmentObject implements Stateful, Act
         this.decider = decider;
         this.abilities = abilities;
         this.range = range;
+        this.rules = rules;
 
         this.effector.setRange(this.range);
 
@@ -53,6 +56,10 @@ public class Agent extends InteractiveEnvironmentObject implements Stateful, Act
          */
         ActionManager manager = ActionEngine.getInstance();
         manager.register(this);
+    }
+
+    public List<Rule> getRules(){
+        return this.rules;
     }
 
     public List<String> getAbilities(){ return this.abilities; }

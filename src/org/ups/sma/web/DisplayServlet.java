@@ -43,11 +43,11 @@ public class DisplayServlet extends HttpServlet {
         Gson gson = new Gson();
         JsonObject jso = new JsonObject();
         jso.add("size", gson.toJsonTree(environment.size));
-        Map<Location,Stack<Type>> graphicMap = new HashMap<Location, Stack<Type>>();
+        Map<String,Stack<Type>> graphicMap = new HashMap<String, Stack<Type>>();
 
         Set<Map.Entry<Location,Stack<InteractiveEnvironmentObject>>> set = environment.map.entrySet();
         for( Map.Entry<Location, Stack<InteractiveEnvironmentObject>> entry : set ){
-            graphicMap.put(entry.getKey(),convertToType(entry.getValue()));
+            graphicMap.put(entry.getKey().x+"@"+entry.getKey().y,convertToType(entry.getValue()));
         }
         jso.add("map",gson.toJsonTree(graphicMap));
 

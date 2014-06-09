@@ -12,11 +12,7 @@ import org.ups.sma.impl.agent.Agent;
  * parts of the environment that are requested.
  */
 public abstract class Filter {
-    protected Agent agent;
 
-    protected Filter(Agent agent){
-        this.agent = agent;
-    }
 
-    public abstract boolean isAcceptable(Location location);
+    public abstract boolean isAcceptable(Location location , Agent agent);
 }

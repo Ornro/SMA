@@ -1,5 +1,13 @@
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import org.ups.sma.custom.domain.environment.Location;
+import org.ups.sma.custom.domain.environment.Size;
+import org.ups.sma.custom.domain.environment.objects.Default;
 import org.ups.sma.custom.impl.actions.WalkOn;
+import org.ups.sma.dao.EnvAdapter;
+import org.ups.sma.dao.IEOAdapter;
 import org.ups.sma.domain.Action;
+<<<<<<< HEAD
 import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.custom.domain.environment.Size;
 import org.ups.sma.custom.domain.environment.Type;
@@ -10,6 +18,14 @@ import org.ups.sma.custom.domain.environment.objects.Wall;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 import org.ups.sma.impl.environement.EnvironmentManager;
+=======
+import org.ups.sma.domain.environnement.Env;
+import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
+import org.ups.sma.impl.environement.EnvironmentManager;
+import org.ups.sma.impl.saver.Saver;
+
+import java.util.*;
+>>>>>>> save + rule enfine
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -82,77 +98,36 @@ public class Main {
 
         System.out.println(jso.toString());*/
 
-        Action action = new WalkOn();
-        System.out.println(action);
+        /**Action action = new WalkOn();
+        System.out.println(action);*/
 
 
-        /** Initialisation **/
-        /*int width = Integer.parseInt(args[0]);
-        int height =  Integer.parseInt(args[1]);
-        Size size = new Size(width, height);*/
-        Size sizeEnv = new Size(100, 100);
 
-        //int nbAgents = Integer.parseInt(args[2]);
-        Size zoneStock = new Size(30,50);
-        Size zoneDepot = new Size(30,50);
-        Size zoneWall = new Size(60,sizeEnv.height);
-
-        int yCorridor1 = 10;
-        int yCorridor2 = 50;
-
-
+        Size size = new Size();
+        size.width = 100;
+        size.height = 100;
         Map<Location,Stack<InteractiveEnvironmentObject>> map = new HashMap<Location, Stack<InteractiveEnvironmentObject>>();
-        Env env = new Env(sizeEnv, map);
-        EnvironmentManager emanager = EnvironmentManager.getInstance();
-        emanager.setEnvironment(env);
-        for(int i=0; i<env.size.width; i++) {
-            for(int j=0; j<env.size.height; j++) {
-                Location location = new Location(i,j);
-                Default def = new Default(location, new ArrayList<String>());
-                def.setType(Type.DEFAULT);
-                Stack<InteractiveEnvironmentObject> stack = new Stack<InteractiveEnvironmentObject>();
-                stack.push(def);
-                env.map.put(location, stack);
-            }
-        }
 
-        for(int i=0; i<zoneStock.width; i++) {
-            for(int j=0; j<zoneStock.height; j++) {
-                Location location = new Location(i,j+(env.size.height - zoneStock.height)/2);
-                ArrayList<String> actions = new ArrayList<String>();
-                actions.add("Get");
-                Take take = new Take(location, actions);
-                take.setType(Type.TAKE);
-                Stack<InteractiveEnvironmentObject> stack = new Stack<InteractiveEnvironmentObject>();
-                stack.push(take);
-                env.map.put(location, stack);
-            }
-        }
+        List<String> actions = new ArrayList<String>();
+        actions.add("Dump");
+        actions.add("Get");
+        InteractiveEnvironmentObject object = new Default(new Location(10,10),actions);
+        InteractiveEnvironmentObject object2 = new Default(new Location(10,10),actions);
 
-        for(int i=0; i<zoneDepot.width; i++) {
-            for(int j=0; j<zoneDepot.height; j++) {
-                Location location = new Location(i+(env.size.width - zoneDepot.width),j+(env.size.height - zoneStock.height)/2);
-                ArrayList<String> actions = new ArrayList<String>();
-                actions.add("Dump");
-                Stock stock = new Stock(location, actions);
-                stock.setType(Type.STOCK);
-                Stack<InteractiveEnvironmentObject> stack = new Stack<InteractiveEnvironmentObject>();
-                stack.push(stock);
-                env.map.put(location, stack);
-            }
-        }
+        Stack<InteractiveEnvironmentObject> stack = new Stack<InteractiveEnvironmentObject>();
+        stack.push(object);
+        stack.push(object2);
 
-        for(int i=0; i<zoneWall.height; i++) {
-            if(i==yCorridor1 || i==yCorridor2) continue;
+        map.put(new Location(10,10),stack);
+        map.put(new Location(20,20),stack);
 
-            for(int j=0;j<zoneWall.width;j++){
-                Location location = new Location(i+(sizeEnv.width - zoneWall.width) / 2, j);
-                Wall wall = new Wall(location, new ArrayList<String>());
-                wall.setType(Type.WALL);
-                Stack<InteractiveEnvironmentObject> stack = new Stack<InteractiveEnvironmentObject>();
-                stack.push(wall);
-                env.map.put(location, stack);
-            }
-        }
-	}
+        Env env = new Env();
+        env.size = size;
+        env.map = map;
+
+        EnvironmentManager envM = EnvironmentManager.initialize(env);
+        Env env2 = Saver.load("toto");
+        System.out.println(env2);
+
+    }
 }

@@ -9,6 +9,7 @@ import java.util.List;
  * Default object
  */
 public class Default extends InteractiveEnvironmentObject {
+
     public Default(Location location, List<String> availableActions) {
         super(availableActions);
         this.location = location;

@@ -5,6 +5,7 @@ import org.ups.sma.domain.Action;
 import org.ups.sma.domain.Choice;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
+import org.ups.sma.domain.environnement.Rule;
 import org.ups.sma.impl.agent.Agent;
 
 import java.util.*;
@@ -59,7 +60,7 @@ public abstract class Decider {
     }
 
     private static Env getReachableEnvironment(Agent agent){
-        return agent.getState().partialEnvironment.applyFilter(agent.getRange());
+        return agent.getState().partialEnvironment.applyFilter(agent.getRange(),agent);
     }
 
     private static List<Action> joinAndInstantiate(List<String> agentActions, List<String> objectActions){
@@ -82,6 +83,17 @@ public abstract class Decider {
 
         }
         return actions;
+    }
+
+    private static List<Choice> decide(Agent a){
+        List<Choice> choices = new ArrayList<Choice>();
+        List<Rule> rules = a.getRules();
+        for (Rule rule : rules){
+            if (rule.condition(a)){
+                choices.addAll(rule.choices(a));
+            }
+        }
+        return choices;
     }
 }
 
