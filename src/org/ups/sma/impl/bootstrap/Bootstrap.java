@@ -57,11 +57,11 @@ public class Bootstrap {
         Map<Location,Stack<InteractiveEnvironmentObject>> map = new HashMap<Location, Stack<InteractiveEnvironmentObject>>();
 */
         //int nbAgents = Integer.parseInt(args[2]);
-        int nbAgents = 1000;
-        Size sizeEnv = new Size(100,100);
-        Size zoneStock = new Size(30,50);
-        Size zoneDepot = new Size(30,50);
-        Size zoneWall = new Size(60,sizeEnv.height);
+        int nbAgents = 10;
+        Size sizeEnv = new Size(40,20);
+        Size zoneStock = new Size(6,10);
+        Size zoneDepot = new Size(6,10);
+        Size zoneWall = new Size(5,sizeEnv.height);
 
 
  /*
@@ -126,7 +126,7 @@ public class Bootstrap {
         }
 
         int yCorridor1 = 10;
-        int yCorridor2 = 50;
+        int yCorridor2 = 15;
         for(int i=0; i<zoneWall.height; i++) {
             if(i==yCorridor1 || i==yCorridor2) continue;
 

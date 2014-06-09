@@ -7,6 +7,7 @@ import org.ups.sma.domain.environment.Env;
 import org.ups.sma.domain.environment.InteractiveEnvironmentObject;
 import org.ups.sma.impl.agent.Agent;
 import org.ups.sma.impl.agent.impl.Decider;
+import org.ups.sma.impl.environment.EnvironmentManager;
 
 /**
  * Created by Ben on 07/06/14.
@@ -17,7 +18,9 @@ public class DecisionUtils {
         Env perceivedEnvironment = a.getState().partialEnvironment;
         Location loc = new Location(a.getLocation().x,a.getLocation().y);
         loc.y++;
-        //System.out.println();
+        System.out.println(loc);
+        //System.out.println(perceivedEnvironment.map);
+        //System.out.println(EnvironmentManager.getInstance().getFullEnvironment().map);
         InteractiveEnvironmentObject object = perceivedEnvironment.get(loc);
 
         if (object != null && (object.is("Wall") || loc.y>perceivedEnvironment.size.height)){
