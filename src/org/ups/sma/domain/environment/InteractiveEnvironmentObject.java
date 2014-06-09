@@ -1,9 +1,11 @@
 package org.ups.sma.domain.environment;
 
 
+import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.custom.domain.environment.Type;
 import org.ups.sma.domain.Action;
 import org.ups.sma.impl.agent.Agent;
+import org.ups.sma.impl.environment.EnvironmentManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +15,11 @@ public abstract class InteractiveEnvironmentObject extends LocalizableEnvironmen
     protected long id;
     protected Type type;
 
-    protected InteractiveEnvironmentObject(List<String> availableActions) {
-        super();
+    protected InteractiveEnvironmentObject(List<String> availableActions, Location location) {
+        super(location);
         this.availableActions = availableActions;
+
+        EnvironmentManager.getInstance().addObject(this.location, this);
     }
 
     /**

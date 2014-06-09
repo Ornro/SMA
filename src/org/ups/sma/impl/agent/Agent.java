@@ -1,6 +1,7 @@
 package org.ups.sma.impl.agent;
 
 
+import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.domain.Action;
 import org.ups.sma.custom.domain.agent.Public;
 import org.ups.sma.custom.domain.agent.State;
@@ -12,6 +13,7 @@ import org.ups.sma.impl.actionengine.ActionEngine;
 import org.ups.sma.impl.agent.impl.Decider;
 import org.ups.sma.impl.agent.impl.Effector;
 import org.ups.sma.impl.agent.impl.Perciever;
+import org.ups.sma.impl.environment.EnvironmentManager;
 import org.ups.sma.interfaces.ActionManager;
 import org.ups.sma.interfaces.Actor;
 import org.ups.sma.interfaces.Savable;
@@ -32,8 +34,8 @@ public class Agent extends InteractiveEnvironmentObject implements Stateful, Act
     private Decider decider;
     private Logger LOGGER = Logger.getLogger(Agent.class.getName() + id);
 
-    public Agent(State state, Effector effector, Perciever perciever, Decider dec, List<String> availableActions ) {
-        super(availableActions);
+    public Agent(State state, Effector effector, Perciever perciever, Decider dec, List<String> availableActions, Location location) {
+        super(availableActions, location);
         this.state = state;
         this.effector = effector;
         this.perciever = perciever;
