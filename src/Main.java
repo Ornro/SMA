@@ -1,13 +1,17 @@
 import org.ups.sma.custom.domain.agent.State;
+import org.ups.sma.custom.domain.agent.rules.*;
 import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.custom.domain.environment.Size;
 import org.ups.sma.custom.domain.environment.Type;
 import org.ups.sma.custom.domain.environment.objects.*;
 import org.ups.sma.custom.impl.agent.Decide;
 import org.ups.sma.custom.impl.agent.Perceive;
+import org.ups.sma.custom.impl.environment.PerceptionFilter;
+import org.ups.sma.custom.impl.environment.RangeFilter;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.Filter;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
+import org.ups.sma.domain.environnement.Rule;
 import org.ups.sma.impl.agent.Agent;
 import org.ups.sma.impl.agent.impl.Act;
 import org.ups.sma.impl.agent.interfaces.Decider;
@@ -177,6 +181,19 @@ public class Main {
             }
         }
 
+        List<Rule> rules = new ArrayList<Rule>();
+        rules.add(new CorridorEncounterRule());
+        rules.add(new CorridorFreeRule());
+        rules.add(new CorridorStuckRule());
+        rules.add(new DumpRule());
+        rules.add(new GetRule());
+        rules.add(new MoveForwardBlockedRule());
+        rules.add(new MoveForwardRule());
+        rules.add(new SurroundedByWallsRule());
+        rules.add(new UpdateObjectiveRule());
+        rules.add(new UpdateObjectiveRule2());
+        rules.add(new UpdateWayPointRule());
+
         for(int i=0; i< nbAgents; i++) {
             Random rand = new Random();
             int x = rand.nextInt(sizeEnv.width-1);
@@ -201,7 +218,8 @@ public class Main {
             abilities.add("Suicide");
             abilities.add("WalkOn");
             Filter rangeFilter = new RangeFilter();
-            Agent agent = new Agent(state, effector, perciever, decider, null , abilities, rangeFilter);
+
+            Agent agent = new Agent(state, effector, perciever, decider, null , abilities, rangeFilter, rules);
 
             stack.push(agent);
             env.map.put(location,stack);
