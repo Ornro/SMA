@@ -58,15 +58,6 @@ public class Env {
         if (this.size.equals(other.size)){
 
             for (Location l : other.map.keySet()) {
-                Stack current = this.map.get(l);
-
-                if (current != null ) {
-                    while (!current.empty()){
-                        InteractiveEnvironmentObject e = (InteractiveEnvironmentObject) current.pop();
-                        e.destroy();
-                    }
-                }
-
                 this.map.put(l,other.map.get(l));
             }
             return true;
