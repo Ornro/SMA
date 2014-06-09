@@ -8,11 +8,10 @@ import org.ups.sma.domain.Choice;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.Filter;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
-import org.ups.sma.domain.environnement.Rule;
 import org.ups.sma.impl.actionengine.ActionEngine;
-import org.ups.sma.impl.agent.interfaces.Decider;
-import org.ups.sma.impl.agent.interfaces.Effector;
-import org.ups.sma.impl.agent.interfaces.Perciever;
+import org.ups.sma.impl.agent.impl.Decider;
+import org.ups.sma.impl.agent.impl.Effector;
+import org.ups.sma.impl.agent.impl.Perciever;
 import org.ups.sma.interfaces.ActionManager;
 import org.ups.sma.interfaces.Actor;
 import org.ups.sma.interfaces.Savable;
@@ -20,8 +19,6 @@ import org.ups.sma.interfaces.Stateful;
 
 import java.lang.reflect.Field;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.logging.Logger;
 
 /**
@@ -34,21 +31,13 @@ public class Agent extends InteractiveEnvironmentObject implements Stateful, Act
     private Perciever perciever;
     private Decider decider;
     private Logger LOGGER = Logger.getLogger(Agent.class.getName() + id);
-    private List<String> abilities;
-    private Filter range;
-    private List<Rule> rules;
 
-    public Agent(State state, Effector effector, Perciever perciever, Decider decider, List<String> availableActions ,List<String> abilities, Filter range, List<Rule> rules) {
+    public Agent(State state, Effector effector, Perciever perciever, Decider dec, List<String> availableActions ) {
         super(availableActions);
         this.state = state;
         this.effector = effector;
         this.perciever = perciever;
-        this.decider = decider;
-        this.abilities = abilities;
-        this.range = range;
-        this.rules = rules;
-
-        this.effector.setRange(this.range);
+        this.decider = dec;
 
         /**
          * The agent registers himself to the action manager
@@ -58,13 +47,13 @@ public class Agent extends InteractiveEnvironmentObject implements Stateful, Act
         manager.register(this);
     }
 
-    public List<Rule> getRules(){
-        return this.rules;
+    public Decider getDecider(){
+        return this.decider;
     }
 
-    public List<String> getAbilities(){ return this.abilities; }
+    public List<String> getAbilities(){ return effector.getAbilities(); }
 
-    public Filter getRange(){ return this.range; }
+    public Filter getRange(){ return effector.getRange(); }
 
     @Override
     public State getState() { return this.state; }
@@ -111,11 +100,6 @@ public class Agent extends InteractiveEnvironmentObject implements Stateful, Act
         manager.unregister(this);
 
         //TODO: fill this method
-    }
-
-    @Override
-    public InteractiveEnvironmentObject clone() {
-        return null;
     }
 
     @Override

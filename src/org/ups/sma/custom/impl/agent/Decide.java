@@ -1,22 +1,10 @@
 package org.ups.sma.custom.impl.agent;
 
-import org.ups.sma.custom.domain.agent.State;
-import org.ups.sma.custom.domain.environment.Location;
-import org.ups.sma.domain.Action;
-import org.ups.sma.domain.Choice;
-import org.ups.sma.domain.environnement.Env;
-import org.ups.sma.impl.agent.Agent;
-import org.ups.sma.impl.agent.interfaces.Decider;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Ben on 24/05/14.
  */
-public class Decide extends Decider {
-
-    @Override
+public class Decide {
+/*
     public List<Choice> getNextMove(Agent agent) {
         List<Choice> finalDecision = new ArrayList<Choice>();
         if (isInCorridorEntrance(agent)){
@@ -261,5 +249,5 @@ public class Decide extends Decider {
             return false;
         }
         return perceivedEnvironment.map.get(location).peek().getAvailableActions().contains("WalkOn");
-    }
+    }*/
 }

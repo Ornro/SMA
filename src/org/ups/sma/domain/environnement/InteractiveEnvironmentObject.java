@@ -46,19 +46,6 @@ public abstract class InteractiveEnvironmentObject extends LocalizableEnvironmen
      */
     public abstract void destroy();
 
-    /**
-     * Must be implemented, is used to generate different
-     * instances of a specified object
-     * e.g: when you want to change some environment
-     * elements and replace them by some other you don't
-     * want the replacing elements to be the same instance
-     * of a single object but several identical instances.
-     * This method is used when an environment is changed.
-     *
-     * @return The cloned object
-     */
-    public abstract InteractiveEnvironmentObject clone();
-
     public boolean isAgent() {
         return this instanceof Agent;
     }

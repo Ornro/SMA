@@ -1,4 +1,4 @@
-package org.ups.sma.impl.agent.interfaces;
+package org.ups.sma.impl.agent.impl;
 
 import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.domain.Action;
@@ -13,8 +13,23 @@ import java.util.*;
 /**
  * Created by Ben on 24/05/14.
  */
-public abstract class Decider {
-    public abstract List<Choice> getNextMove(Agent agent);
+public class Decider {
+    private List<Rule> rules;
+
+    public Decider (List<Rule> rules){
+        this.rules = rules;
+    }
+
+    public List<Choice> getNextMove(Agent agent){
+        List<Choice> choices = new ArrayList<Choice>();
+        List<Rule> rules = this.rules;
+        for (Rule rule : rules){
+            if (rule.condition(agent)){
+                choices.addAll(rule.choices(agent));
+            }
+        }
+        return choices;
+    }
 
     /**
      * Returns the list of the possible choices that an agent can do knowing his perceived environment.
@@ -23,7 +38,7 @@ public abstract class Decider {
      * @param agent the agent
      * @return the list of optional actions an agent can perform
      */
-    public static List<Choice> getAvailableChoices(Agent agent){
+    public List<Choice> getAvailableChoices(Agent agent){
         Env env = getReachableEnvironment(agent);
         List<Choice> moves = new ArrayList<Choice>();
         Set<Map.Entry<Location,Stack<InteractiveEnvironmentObject>>> entries = env.map.entrySet();
@@ -33,7 +48,10 @@ public abstract class Decider {
             for (InteractiveEnvironmentObject object : objects){
                 List<Action> actions = joinAndInstantiate(agent.getAbilities(), object.getAvailableActions());
                 for (Action action : actions){
-                    moves.add(new Choice(action,object));
+                    if (agent.getAbilities().contains(action.toString())){
+                        moves.add(new Choice(action,object));
+                    }
+
                 }
             }
         }
@@ -45,11 +63,11 @@ public abstract class Decider {
      * Return all the choices that are involving the given action
      *
      * @param actionName the action
-     * @param availableChoices the list of all available choices
      *
      * @return the list of choices that are involving the given action
      */
-    public static List<Choice> getChoicesInvolvingAction(String actionName, List<Choice> availableChoices){
+    public static List<Choice> getChoicesInvolvingAction(String actionName, Agent agent){
+        List<Choice> availableChoices = agent.getDecider().getAvailableChoices(agent);
         List<Choice> narrowedChoices = new ArrayList<Choice>();
         for (Choice c : availableChoices){
             if (c.isAction(actionName)){
@@ -83,17 +101,6 @@ public abstract class Decider {
 
         }
         return actions;
-    }
-
-    private static List<Choice> decide(Agent a){
-        List<Choice> choices = new ArrayList<Choice>();
-        List<Rule> rules = a.getRules();
-        for (Rule rule : rules){
-            if (rule.condition(a)){
-                choices.addAll(rule.choices(a));
-            }
-        }
-        return choices;
     }
 }
 

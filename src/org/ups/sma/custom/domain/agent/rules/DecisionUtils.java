@@ -5,11 +5,7 @@ import org.ups.sma.domain.Action;
 import org.ups.sma.domain.Choice;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.impl.agent.Agent;
-import org.ups.sma.impl.agent.interfaces.Decider;
-import sun.management.resources.agent;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.ups.sma.impl.agent.impl.Decider;
 
 /**
  * Created by Ben on 07/06/14.
@@ -68,11 +64,7 @@ public class DecisionUtils {
     public static boolean canMoveOn(Location location, Agent a){
         Env perceivedEnvironment = a.getState().partialEnvironment;
 
-        if ( location.y>perceivedEnvironment.size.height || location.y<perceivedEnvironment.size.height
-                || location.x<perceivedEnvironment.size.width || location.x>perceivedEnvironment.size.width){
-            return false;
-        }
-        return perceivedEnvironment.map.get(location).peek().getAvailableActions().contains("WalkOn");
+        return !(location.y > perceivedEnvironment.size.height || location.y < perceivedEnvironment.size.height || location.x < perceivedEnvironment.size.width || location.x > perceivedEnvironment.size.width) && perceivedEnvironment.map.get(location).peek().getAvailableActions().contains("WalkOn");
     }
 
     public static boolean canMoveBack(Agent a) {
@@ -96,32 +88,32 @@ public class DecisionUtils {
     }
 
     public static boolean canGet(Agent agent) {
-        return !Decider.getChoicesInvolvingAction("Get", Decider.getAvailableChoices(agent)).isEmpty();
+        return !Decider.getChoicesInvolvingAction("Get", agent).isEmpty();
     }
 
     public static boolean canDump(Agent agent) {
-        return !Decider.getChoicesInvolvingAction("Dump", Decider.getAvailableChoices(agent)).isEmpty();
+        return !Decider.getChoicesInvolvingAction("Dump", agent).isEmpty();
     }
 
     public static boolean hasBox(Agent agent){
         return agent.getState().boxHeld != null;
     }
 
-    public static Choice dump(Agent a){
-        return Decider.getChoicesInvolvingAction("Dump", Decider.getAvailableChoices(a)).get(0);
+    public static Choice dump(Agent agent){
+        return Decider.getChoicesInvolvingAction("Dump", agent).get(0);
     }
 
-    public static Choice get(Agent a){
-        return Decider.getChoicesInvolvingAction("Get", Decider.getAvailableChoices(a)).get(0);
+    public static Choice get(Agent agent){
+        return Decider.getChoicesInvolvingAction("Get", agent).get(0);
     }
 
-    public static Choice getRandomMove(Agent a){
-        return Decider.getChoicesInvolvingAction("WalkOn", Decider.getAvailableChoices(a)).get(0);
+    public static Choice getRandomMove(Agent agent){
+        return Decider.getChoicesInvolvingAction("WalkOn", agent).get(0);
 
     }
 
-    public static boolean canMove(Agent a){
-         return !Decider.getChoicesInvolvingAction("WalkOn", Decider.getAvailableChoices(a)).isEmpty();
+    public static boolean canMove(Agent agent){
+         return !Decider.getChoicesInvolvingAction("WalkOn", agent).isEmpty();
     }
 
     public static boolean isSurroundedByWalls(Agent a){
@@ -134,8 +126,7 @@ public class DecisionUtils {
         loc.x -= 2;
         if (!env.get(loc).is("Wall")) return false;
         loc.y -= 2;
-        if (!env.get(loc).is("Wall")) return false;
-        return true;
+        return env.get(loc).is("Wall");
     }
 
     public static boolean isBoxHeld(Agent a){

@@ -14,9 +14,9 @@ import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 import org.ups.sma.domain.environnement.Rule;
 import org.ups.sma.impl.agent.Agent;
 import org.ups.sma.impl.agent.impl.Act;
-import org.ups.sma.impl.agent.interfaces.Decider;
-import org.ups.sma.impl.agent.interfaces.Effector;
-import org.ups.sma.impl.agent.interfaces.Perciever;
+import org.ups.sma.impl.agent.impl.Decider;
+import org.ups.sma.impl.agent.impl.Effector;
+import org.ups.sma.impl.agent.impl.Perciever;
 import org.ups.sma.impl.environement.EnvironmentManager;
 
 import java.util.*;
