@@ -1,9 +1,7 @@
 package org.ups.sma.domain.environnement;
 
-import org.ups.sma.custom.domain.environnement.Location;
+import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.impl.agent.Agent;
-
-import java.util.Stack;
 
 /**
  * To get a part of an environment,

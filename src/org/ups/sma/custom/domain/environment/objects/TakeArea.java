@@ -1,4 +1,4 @@
-package org.ups.sma.custom.domain.environnement.objects;
+package org.ups.sma.custom.domain.environment.objects;
 
 import java.util.List;
 

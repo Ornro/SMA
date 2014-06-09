@@ -1,18 +1,5 @@
-import org.lightcouch.CouchDbClient;
-import java.util.Date;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import org.ups.sma.custom.domain.environnement.Location;
-import org.ups.sma.domain.Mode;
-import org.ups.sma.domain.environnement.Env;
-
-import org.ups.sma.domain.environnement.Filter;
-import org.ups.sma.impl.agent.Agent;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
+import org.ups.sma.custom.impl.actions.WalkOn;
+import org.ups.sma.domain.Action;
 
 
 public class Main {
@@ -66,7 +53,7 @@ public class Main {
 		ctrl.step();
 		ctrl.step();*/
 
-        Mode mode = Mode.AUTO;
+        /*Mode mode = Mode.AUTO;
         boolean isPlaying = true;
         int delay = 10;
 
@@ -80,7 +67,9 @@ public class Main {
         jso.add("state", gson.toJsonTree(state));
         jso.add("delay", gson.toJsonTree(delay));
 
-        System.out.println(jso.toString());
+        System.out.println(jso.toString());*/
+        Action action = new WalkOn();
+        System.out.println(action);
 	}
 
 }

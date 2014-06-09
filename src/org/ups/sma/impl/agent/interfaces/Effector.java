@@ -1,6 +1,7 @@
 package org.ups.sma.impl.agent.interfaces;
 
 import org.ups.sma.domain.Action;
+import org.ups.sma.domain.Choice;
 import org.ups.sma.domain.environnement.Filter;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 import org.ups.sma.impl.agent.Agent;
@@ -14,7 +15,7 @@ import java.util.Map;
 public abstract class Effector {
     private Filter range;
 
-    public abstract void execute(Map<Action,InteractiveEnvironmentObject> toDo, Agent agent);
+    public abstract void execute(List<Choice> choices, Agent agent);
 
     public Filter getRange(){ return this.range; }
     public void setRange(Filter range) {this.range=range;}

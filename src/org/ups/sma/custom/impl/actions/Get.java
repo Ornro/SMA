@@ -1,6 +1,6 @@
 package org.ups.sma.custom.impl.actions;
 
-import org.ups.sma.custom.domain.environnement.objects.Box;
+import org.ups.sma.custom.domain.environment.objects.Box;
 import org.ups.sma.domain.Action;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
@@ -18,7 +18,7 @@ public class Get extends Action {
         Stack<InteractiveEnvironmentObject> objects = env.map.get(ieo.getLocation());
         if(objects.peek() instanceof Box) {
             Box box = (Box)objects.peek();
-            a.getState().boxHolded = box;
+            a.getState().boxHeld = box;
             emanager.removeObject(box);
         }
 

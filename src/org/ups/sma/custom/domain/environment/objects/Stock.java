@@ -1,15 +1,15 @@
-package org.ups.sma.custom.domain.environnement.objects;
+package org.ups.sma.custom.domain.environment.objects;
 
-import org.ups.sma.custom.domain.environnement.Location;
+import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 
 import java.util.List;
 
 /**
- * Created by Business on 06/06/14.
+ * Created by Business on 04/06/14.
  */
-public class Take extends InteractiveEnvironmentObject {
-    public Take(Location location, List<String> availableActions) {
+public class Stock extends InteractiveEnvironmentObject {
+    public Stock(Location location, List<String> availableActions) {
         super(availableActions);
         this.location = location;
     }

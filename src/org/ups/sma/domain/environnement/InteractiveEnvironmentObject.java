@@ -1,7 +1,9 @@
 package org.ups.sma.domain.environnement;
 
 
-import org.ups.sma.custom.domain.environnement.Type;
+import org.ups.sma.custom.domain.environment.Type;
+import org.ups.sma.domain.Action;
+import org.ups.sma.impl.agent.Agent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,4 +56,18 @@ public abstract class InteractiveEnvironmentObject extends LocalizableEnvironmen
      * @return The cloned object
      */
     public abstract InteractiveEnvironmentObject clone();
+
+    public boolean isAgent() {
+        return this instanceof Agent;
+    }
+
+    public boolean is(String object){
+        try {
+            Class<Action> c = (Class<Action>) Class.forName("org.ups.sma.custom.domain.environment.objects."+object);
+            return c.isInstance(this);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

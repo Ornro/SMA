@@ -1,6 +1,6 @@
 package org.ups.sma.domain.environnement;
 
-import org.ups.sma.custom.domain.environnement.Location;
+import org.ups.sma.custom.domain.environment.Location;
 
 /**
  * Created by Ben on 24/05/14.

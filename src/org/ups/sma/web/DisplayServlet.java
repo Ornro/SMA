@@ -2,8 +2,8 @@ package org.ups.sma.web;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import org.ups.sma.custom.domain.environnement.Location;
-import org.ups.sma.custom.domain.environnement.Type;
+import org.ups.sma.custom.domain.environment.Location;
+import org.ups.sma.custom.domain.environment.Type;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 

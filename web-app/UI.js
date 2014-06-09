@@ -50,7 +50,7 @@ UI.prototype._loop = function(){
 	}).bind(this))
 	
 	.fail(function(){
-		alert('Error while loading initial environnement\n'+this.url);
+		alert('Error while loading initial environment\n'+this.url);
 	});
 };
 

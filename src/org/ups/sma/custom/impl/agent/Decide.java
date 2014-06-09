@@ -1,16 +1,15 @@
 package org.ups.sma.custom.impl.agent;
 
 import org.ups.sma.custom.domain.agent.State;
-import org.ups.sma.custom.domain.environnement.Location;
+import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.domain.Action;
+import org.ups.sma.domain.Choice;
 import org.ups.sma.domain.environnement.Env;
-import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 import org.ups.sma.impl.agent.Agent;
 import org.ups.sma.impl.agent.interfaces.Decider;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Ben on 24/05/14.
@@ -18,58 +17,65 @@ import java.util.Map;
 public class Decide extends Decider {
 
     @Override
-    public Map<Action, InteractiveEnvironmentObject> getNextMove(Agent agent, Env perceivedEnvironment) {
-        if (isCorridorEntrance(agent.getLocation(),perceivedEnvironment)){
-            return getInCorridorDecision(agent, perceivedEnvironment);
-        } else if (isCorridor(agent.getLocation(),perceivedEnvironment)){
-            return corridorDecision(agent, perceivedEnvironment);
+    public List<Choice> getNextMove(Agent agent) {
+        List<Choice> finalDecision = new ArrayList<Choice>();
+        if (isInCorridorEntrance(agent)){
+            finalDecision.add(getInCorridorDecision(agent));
+            return finalDecision;
+        } else if (isInCorridor(agent)){
+            finalDecision.add(corridorDecision(agent));
+            return finalDecision;
         } else {
-            Map<Action, InteractiveEnvironmentObject> dumpOrGet;
-            if ( agent.getState().boxHolded != null ){
-                dumpOrGet = canDump(agent, perceivedEnvironment);
+            Choice dumpOrGet;
+            if ( agent.getState().boxHeld != null ){
+                dumpOrGet = canDump(agent);
             } else {
-                dumpOrGet = canGet(agent, perceivedEnvironment);
+                dumpOrGet = canGet(agent);
             }
 
             if ( dumpOrGet == null ) {
-                return notInCorridorDecision(agent, perceivedEnvironment);
+                finalDecision.add(notInCorridorDecision(agent));
+                return finalDecision;
             }else {
-                return dumpOrGet;
+                finalDecision.add(dumpOrGet);
+                return finalDecision;
             }
         }
     }
 
-    private Map<Action, InteractiveEnvironmentObject> canGet(Agent agent, Env perceivedEnvironment) {
-        Map<Action, InteractiveEnvironmentObject> action = new HashMap<Action, InteractiveEnvironmentObject>();
+    private Choice canGet(Agent agent) {
+        Choice choice = null;
+        List<Choice> gettable =  getChoicesInvolvingAction("Get", getAvailableChoices(agent));
 
-        List<InteractiveEnvironmentObject> gettableObjects =  whereIsActionAvailable("Get",getAvailableMoves(agent,perceivedEnvironment));
-        if (gettableObjects != null){
-            action.put(getAction("Get"),gettableObjects.get(0));
-            return action;
+        if (gettable != null){
+            choice = gettable.get(0);
         }
-        return null;
+
+        return choice;
     }
 
-    private Map<Action, InteractiveEnvironmentObject> canDump(Agent agent, Env perceivedEnvironment) {
-        Map<Action, InteractiveEnvironmentObject> action = new HashMap<Action, InteractiveEnvironmentObject>();
+    private Choice canDump(Agent agent) {
+        Choice choice = null;
+        List<Choice> dumpable =  getChoicesInvolvingAction("Dump", getAvailableChoices(agent));
 
-        List<InteractiveEnvironmentObject> dumpableObjects =  whereIsActionAvailable("Dump",getAvailableMoves(agent,perceivedEnvironment));
-        if (dumpableObjects != null){
-            action.put(getAction("Dump"),dumpableObjects.get(0));
-            return action;
+        if (dumpable != null){
+            choice = dumpable.get(0);
         }
-        return null;
+
+        return choice;
     }
 
-    private Map<Action, InteractiveEnvironmentObject> getInCorridorDecision(Agent agent, Env perceivedEnvironment){
-        Map<Action, InteractiveEnvironmentObject> action = new HashMap<Action, InteractiveEnvironmentObject>();
+
+    private Choice getInCorridorDecision(Agent agent){
+        Env perceivedEnvironment = agent.getState().partialEnvironment;
+        Choice action = null;
         Location next = getForwardLocation(agent);
         State agentState = agent.getState();
 
         if (canMoveOn(next,perceivedEnvironment)) {
-            action.put(getAction("WalkOn"),perceivedEnvironment.get(next));
+            action = new Choice(Action.get("WalkOn"),perceivedEnvironment.get(next));
 
-            if (agentState.boxHolded != null){
+            if (agentState.boxHeld != null){
                 agentState.wayToDepot = agent.getLocation();
             }else {
                 agentState.wayToStorage = agent.getLocation();
@@ -83,20 +89,21 @@ public class Decide extends Decider {
             } if (agentState.wayToStorage == agent.getLocation()) {
                 agentState.wayToStorage = null;
             }
-            return notInCorridorDecision(agent, perceivedEnvironment);
+            return notInCorridorDecision(agent);
         }
     }
 
-    private Map<Action, InteractiveEnvironmentObject> notInCorridorDecision(Agent agent, Env perceivedEnvironment){
-        Map<Action, InteractiveEnvironmentObject> action = new HashMap<Action, InteractiveEnvironmentObject>();
+    private Choice notInCorridorDecision(Agent agent){
+        Env perceivedEnvironment = agent.getState().partialEnvironment;
+        Choice action = null;
         Location next = getForwardLocation(agent);
         State agentState = agent.getState();
 
         if (canMoveOn(next,perceivedEnvironment)) {
-            action.put(getAction("WalkOn"),perceivedEnvironment.get(next));
-            return action;
+            return new Choice(Action.get("WalkOn"),perceivedEnvironment.get(next));
 
         } else {
+
             if (agentState.bestIsNorth){
                 agentState.goingSouth = true;
             } else if (!agent.getState().goingNorth && !agent.getState().goingSouth) {
@@ -107,7 +114,7 @@ public class Decide extends Decider {
                 next = agent.getLocation();
                 next.y--;
                 if (canMoveOn(next,perceivedEnvironment)) {
-                    action.put(getAction("WalkOn"),perceivedEnvironment.get(next));
+                    action = new Choice(Action.get("WalkOn"),perceivedEnvironment.get(next));
                     agentState.bestIsNorth = false;
                     return action;
                 } else {
@@ -119,7 +126,7 @@ public class Decide extends Decider {
                 next = agent.getLocation();
                 next.y++;
                 if (canMoveOn(next,perceivedEnvironment)) {
-                    action.put(getAction("WalkOn"),perceivedEnvironment.get(next));
+                    action = new Choice(Action.get("WalkOn"),perceivedEnvironment.get(next));
                     agentState.bestIsNorth = false;
                     return action;
                 } else {
@@ -133,42 +140,44 @@ public class Decide extends Decider {
         }
     }
 
-    private boolean isCorridor(Location _loc, Env perceivedEnvironment){
-        Location loc = new Location(_loc.x,_loc.y);
+    private boolean isInCorridor(Agent a){
+        Env perceivedEnvironment = a.getState().partialEnvironment;
+        Location loc = new Location(a.getLocation().x,a.getLocation().y);
         loc.y++;
-        if (is(perceivedEnvironment.get(loc),"Wall") || loc.y>perceivedEnvironment.size.height){
+        if (perceivedEnvironment.get(loc).is("Wall") || loc.y>perceivedEnvironment.size.height){
             loc.y-=2;
-            if (is(perceivedEnvironment.get(loc),"Wall") || loc.y<perceivedEnvironment.size.height){
+            if (perceivedEnvironment.get(loc).is("Wall") || loc.y<perceivedEnvironment.size.height){
                 return true;
             }
         }
         return false;
     }
 
-    private boolean isCorridorEntrance(Location _loc, Env perceivedEnvironment){
-        Location loc = new Location(_loc.x,_loc.y);
+    private boolean isInCorridorEntrance(Agent a){
+        Location loc = new Location(a.getLocation().x,a.getLocation().y);
         loc.x++;
-        if (is(perceivedEnvironment.get(loc),"Wall")){
+        if (a.getState().partialEnvironment.get(loc).is("Wall")){
             return false;
         }
-        if (isCorridor(loc,perceivedEnvironment)){
+        if (isInCorridor(a)){
             return true;
         }else {
             loc.x-=2;
-            return !is(perceivedEnvironment.get(loc), "Wall") && isCorridor(loc, perceivedEnvironment);
+            return !a.getState().partialEnvironment.get(loc).is("Wall") && isInCorridor(a);
         }
 
     }
-    private Map<Action, InteractiveEnvironmentObject> corridorDecision(Agent agent, Env perceivedEnvironment){
-        Map<Action, InteractiveEnvironmentObject> action = new HashMap<Action, InteractiveEnvironmentObject>();
+    private Choice corridorDecision(Agent agent){
+        Env perceivedEnvironment = agent.getState().partialEnvironment;
+        Choice action = null;
         Location next = getForwardLocation(agent);
-        if ( isAgent(perceivedEnvironment.get(next)) ) {
+        if ( perceivedEnvironment.get(next).isAgent() ) {
             next = getBackwardLocation(agent);
 
             return move(next,perceivedEnvironment);
         } else {
             if (canMoveOn(next,perceivedEnvironment)){
-                action.put(getAction("WalkOn"),perceivedEnvironment.get(next));
+                action = new Choice(Action.get("WalkOn"),perceivedEnvironment.get(next));
                 return action;
             } else {
                 // can't move no agent in front
@@ -179,11 +188,9 @@ public class Decide extends Decider {
         }
     }
 
-    private Map<Action, InteractiveEnvironmentObject> move(Location to, Env perceivedEnvironment ){
-        Map<Action, InteractiveEnvironmentObject> action = new HashMap<Action, InteractiveEnvironmentObject>();
-        if (canMoveOn(to,perceivedEnvironment)){
-            action.put(getAction("WalkOn"),perceivedEnvironment.get(to));
-        }
+    private Choice move(Location to, Env perceivedEnvironment){
+        Choice action = null;
+        if (canMoveOn(to,perceivedEnvironment)) action = new Choice(Action.get("WalkOn"), perceivedEnvironment.get(to));
 
         return action;
     }
@@ -192,7 +199,7 @@ public class Decide extends Decider {
         Location agentLoc = agent.getLocation();
         Location target;
 
-        if (agent.getState().boxHolded != null){
+        if (agent.getState().boxHeld != null){
             if (agent.getState().wayToDepot != null && agent.getLocation() != agent.getState().wayToDepot){
                 target = agent.getState().wayToDepot;
             } else {
@@ -222,7 +229,7 @@ public class Decide extends Decider {
         Location agentLoc = agent.getLocation();
         Location target;
 
-        if (agent.getState().boxHolded != null){
+        if (agent.getState().boxHeld != null){
             if (agent.getState().wayToDepot != null){
                 target = agent.getState().wayToDepot;
             } else {

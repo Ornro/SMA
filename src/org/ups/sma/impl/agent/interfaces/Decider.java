@@ -1,7 +1,8 @@
 package org.ups.sma.impl.agent.interfaces;
 
-import org.ups.sma.custom.domain.environnement.Location;
+import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.domain.Action;
+import org.ups.sma.domain.Choice;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 import org.ups.sma.impl.agent.Agent;
@@ -12,26 +13,56 @@ import java.util.*;
  * Created by Ben on 24/05/14.
  */
 public abstract class Decider {
-    public abstract Map<Action,InteractiveEnvironmentObject> getNextMove(Agent agent, Env perceivedEnvironment);
+    public abstract List<Choice> getNextMove(Agent agent);
 
-    protected Map<InteractiveEnvironmentObject,List<Action>> getAvailableMoves(Agent agent, Env perceivedEnvironment){
-        Env env = getReachableEnvironment(agent,perceivedEnvironment);
-        Map<InteractiveEnvironmentObject,List<Action>> moves = new HashMap<InteractiveEnvironmentObject,List<Action>>();
+    /**
+     * Returns the list of the possible choices that an agent can do knowing his perceived environment.
+     * It uses the agent range filter to narrow the results.
+     *
+     * @param agent the agent
+     * @return the list of optional actions an agent can perform
+     */
+    public static List<Choice> getAvailableChoices(Agent agent){
+        Env env = getReachableEnvironment(agent);
+        List<Choice> moves = new ArrayList<Choice>();
         Set<Map.Entry<Location,Stack<InteractiveEnvironmentObject>>> entries = env.map.entrySet();
+
         for (Map.Entry<Location,Stack<InteractiveEnvironmentObject>> entry : entries ){
             Stack<InteractiveEnvironmentObject> objects = entry.getValue();
             for (InteractiveEnvironmentObject object : objects){
-                moves.put(object, joinAndInstantiate(agent.getAbilities(),object.getAvailableActions()));
+                List<Action> actions = joinAndInstantiate(agent.getAbilities(), object.getAvailableActions());
+                for (Action action : actions){
+                    moves.add(new Choice(action,object));
+                }
             }
         }
+
         return moves;
     }
 
-    private Env getReachableEnvironment(Agent agent, Env perceivedEnvironment){
-        return perceivedEnvironment.applyFilter(agent.getRange());
+    /**
+     * Return all the choices that are involving the given action
+     *
+     * @param actionName the action
+     * @param availableChoices the list of all available choices
+     *
+     * @return the list of choices that are involving the given action
+     */
+    public static List<Choice> getChoicesInvolvingAction(String actionName, List<Choice> availableChoices){
+        List<Choice> narrowedChoices = new ArrayList<Choice>();
+        for (Choice c : availableChoices){
+            if (c.isAction(actionName)){
+                narrowedChoices.add(c);
+            }
+        }
+        return narrowedChoices;
     }
 
-    private List<Action> joinAndInstantiate(List<String> agentActions, List<String> objectActions){
+    private static Env getReachableEnvironment(Agent agent){
+        return agent.getState().partialEnvironment.applyFilter(agent.getRange());
+    }
+
+    private static List<Action> joinAndInstantiate(List<String> agentActions, List<String> objectActions){
         List<Action> actions = new ArrayList<Action>();
         List<String> intersection = new ArrayList<String>();
         intersection.addAll(agentActions);
@@ -51,58 +82,6 @@ public abstract class Decider {
 
         }
         return actions;
-    }
-
-    protected List<InteractiveEnvironmentObject> whereIsActionAvailable(String action, Map<InteractiveEnvironmentObject,List<Action>> options){
-        List<InteractiveEnvironmentObject> objectsOnWhichActionIsAvailable = new ArrayList<InteractiveEnvironmentObject>();
-        Set<Map.Entry<InteractiveEnvironmentObject,List<Action>>> entries = options.entrySet();
-
-        for (Map.Entry<InteractiveEnvironmentObject,List<Action>> entry : entries){
-            List<Action> actions = entry.getValue();
-            InteractiveEnvironmentObject object = entry.getKey();
-            try {
-                Class<?> c = Class.forName("org.ups.sma.custom.impl.actions."+action);
-
-                for (Action a : actions){
-                    if (c.isInstance(a)){
-                        objectsOnWhichActionIsAvailable.add(object);
-                    }
-                }
-            }catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-
-        }
-        return objectsOnWhichActionIsAvailable;
-
-    }
-
-    protected boolean is(InteractiveEnvironmentObject ieo, String object){
-        try {
-            Class<?> c = Class.forName("org.ups.sma.custom.domain.objects."+object);
-            return c.isInstance(ieo);
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    protected boolean isAgent(InteractiveEnvironmentObject interactiveEnvironmentObject) {
-        return interactiveEnvironmentObject instanceof Agent;
-    }
-
-    protected Action getAction(String action){
-        try {
-            Class<?> c = Class.forName("org.ups.sma.custom.impl.actions."+action);
-            return (Action) c.newInstance();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }
 

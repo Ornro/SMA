@@ -1,9 +1,8 @@
 package org.ups.sma.impl.environement;
 
-import org.ups.sma.custom.domain.environnement.Location;
-import org.ups.sma.custom.domain.environnement.Size;
+import org.ups.sma.custom.domain.environment.Location;
+import org.ups.sma.custom.domain.environment.Size;
 import org.ups.sma.domain.environnement.Env;
-import org.ups.sma.domain.environnement.Filter;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 import org.ups.sma.interfaces.IEnvironmentManager;
 

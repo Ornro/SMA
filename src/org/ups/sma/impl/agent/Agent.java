@@ -1,10 +1,10 @@
 package org.ups.sma.impl.agent;
 
 
-import org.ups.sma.custom.domain.environnement.Location;
 import org.ups.sma.domain.Action;
 import org.ups.sma.custom.domain.agent.Public;
 import org.ups.sma.custom.domain.agent.State;
+import org.ups.sma.domain.Choice;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.Filter;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
@@ -12,7 +12,6 @@ import org.ups.sma.impl.actionengine.ActionEngine;
 import org.ups.sma.impl.agent.interfaces.Decider;
 import org.ups.sma.impl.agent.interfaces.Effector;
 import org.ups.sma.impl.agent.interfaces.Perciever;
-import org.ups.sma.impl.environement.EnvironmentManager;
 import org.ups.sma.interfaces.ActionManager;
 import org.ups.sma.interfaces.Actor;
 import org.ups.sma.interfaces.Savable;
@@ -33,18 +32,16 @@ public class Agent extends InteractiveEnvironmentObject implements Stateful, Act
     private Effector effector;
     private Perciever perciever;
     private Decider decider;
-    private Env partialEnvironment;
     private Logger LOGGER = Logger.getLogger(Agent.class.getName() + id);
     private List<String> abilities;
     private Filter range;
 
-    public Agent(State state, Effector effector, Perciever perciever, Decider decider, Env partialEnvironment, List<String> availableActions ,List<String> abilities, Filter range) {
+    public Agent(State state, Effector effector, Perciever perciever, Decider decider, List<String> availableActions ,List<String> abilities, Filter range) {
         super(availableActions);
         this.state = state;
         this.effector = effector;
         this.perciever = perciever;
         this.decider = decider;
-        this.partialEnvironment = partialEnvironment;
         this.abilities = abilities;
         this.range = range;
 
@@ -85,19 +82,18 @@ public class Agent extends InteractiveEnvironmentObject implements Stateful, Act
     public void act() {
         Env perceivedEnvironment = perciever.getInformation(this);
 
-        partialEnvironment.merge(perceivedEnvironment);
+        this.state.partialEnvironment.merge(perceivedEnvironment);
 
-        Map<Action,InteractiveEnvironmentObject> actionsToExecute = decider.getNextMove(this,perceivedEnvironment);
+        List<Choice> actionsToExecute = decider.getNextMove(this);
         logAgentActions(actionsToExecute);
 
         effector.execute(actionsToExecute,this);
     }
 
-    private void logAgentActions(Map<Action,InteractiveEnvironmentObject> actionsToExecute){
-        Set<Map.Entry<Action,InteractiveEnvironmentObject>> entries = actionsToExecute.entrySet();
-        for (Map.Entry entry : entries){
-            Action a = (Action) entry.getKey();
-            InteractiveEnvironmentObject object = (InteractiveEnvironmentObject) entry.getValue();
+    private void logAgentActions(List<Choice> choices){
+        for (Choice c : choices){
+            Action a = c.getAction();
+            InteractiveEnvironmentObject object = c.getObject();
             LOGGER.info("Agent "+id+" will execute "+a+" on "+object);
         }
     }

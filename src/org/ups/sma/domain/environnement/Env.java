@@ -1,7 +1,7 @@
 package org.ups.sma.domain.environnement;
 
-import org.ups.sma.custom.domain.environnement.Location;
-import org.ups.sma.custom.domain.environnement.Size;
+import org.ups.sma.custom.domain.environment.Location;
+import org.ups.sma.custom.domain.environment.Size;
 
 import java.util.HashMap;
 import java.util.Map;
