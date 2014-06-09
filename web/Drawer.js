@@ -35,6 +35,8 @@ Drawer.prototype._drawCase = function(element){
     switch(element.type){
         case "WALL": color = '#000000'; break;
         case "DEFAULT": color = '#eeeeee'; break;
+        case "BOX": color = '#0000aa'; break;
+        case "STOCK": color = '#00aa00'; break;
         default: color = '#ff0000'; break;
     }
 

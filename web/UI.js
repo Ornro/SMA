@@ -18,12 +18,11 @@ UI.prototype._loop = function(){
 	$.get(this.url)
 	
 	.done((function(data){
-		this.drawer.refresh(data);	
+		this.drawer.refresh(data);
 	}).bind(this))
 	
 	.fail(function(data){
-        console.log(data)
-		alert('Error while loading initial environment\n'+this.url);
+        console.log("Error while loading");
 	});
 };
 

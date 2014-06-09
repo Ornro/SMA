@@ -46,7 +46,6 @@ public class Bootstrap {
 
 
         Action action = new WalkOn();
-        System.out.println(action);
 
 
         /** Initialisation **/
@@ -120,7 +119,7 @@ public class Bootstrap {
         }
 
         int yCorridor1 = 10;
-        int yCorridor2 = 20;
+        int yCorridor2 = 15;
         for(int i=0; i<zoneWall.height; i++) {
             if(i==yCorridor1 || i==yCorridor2) continue;
 

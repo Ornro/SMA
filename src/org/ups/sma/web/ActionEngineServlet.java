@@ -3,6 +3,7 @@ package org.ups.sma.web;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.ups.sma.domain.Mode;
 import org.ups.sma.impl.actionengine.ActionEngine;
 import org.ups.sma.impl.bootstrap.Bootstrap;
@@ -24,7 +25,10 @@ public class ActionEngineServlet extends javax.servlet.http.HttpServlet {
         String methodToCall = request.getQueryString();
         ActionEngine actEngine = ActionEngine.getInstance();
 
+        System.out.println(methodToCall);
+
         if (methodToCall.startsWith("play")){
+            System.out.println("Go to play");
             actEngine.play();
         }else if (methodToCall.startsWith("pause")){
             actEngine.pause();
@@ -32,10 +36,10 @@ public class ActionEngineServlet extends javax.servlet.http.HttpServlet {
             actEngine.setDelay(Integer.parseInt(methodToCall.substring(methodToCall.indexOf("=") + 1)));
         }else if (methodToCall.startsWith("step")){
             actEngine.step();
-        } else if (methodToCall.startsWith("step")){
-            actEngine.step();
         } else if (methodToCall.startsWith("mode")){
-            actEngine.changeMode(Mode.valueOf(methodToCall.substring(methodToCall.indexOf("=") + 1)));
+            String newModeStr = methodToCall.substring(methodToCall.indexOf("=") + 1);
+            Mode newMode = (newModeStr.equals("step") ? Mode.STEP : Mode.AUTO);
+            actEngine.changeMode(newMode);
         } else if (methodToCall.startsWith("currentSet")){
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();

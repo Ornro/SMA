@@ -43,9 +43,9 @@
 
 
     <label>
-        Delay : <input type="text" size="4" /> ms
+        Delay : <input type="text" size="4" ng-model="currentState.delay" /> ms
     </label>
-    <input type="button" ng-click="modeHasChanged()" value="Ok" />
+    <input type="button" ng-click="changeDelay()" value="Ok" />
 
     <input type="button" value="Next step" ng-click="nextStep()"/>
 </div>

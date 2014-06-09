@@ -1,12 +1,12 @@
 function ControlsCtrl($scope, $http){
 	
-	var urlBase = 'http://localhost:7070/';
-	var urlRead = urlBase + '';
-	var urlPlay = urlBase + '';
-	var urlPause = urlBase + '';
-	var urlChangeDelay = urlBase + '';
-	var urlChangeMode = urlBase + '';
-	var urlNextStep = urlBase + '';
+	var urlBase = 'http://localhost:8080/engine?';
+	var urlRead = urlBase + 'currentSet';
+	var urlPlay = urlBase + 'play';
+	var urlPause = urlBase + 'pause';
+	var urlChangeDelay = urlBase + 'delay';
+	var urlChangeMode = urlBase + 'mode';
+	var urlNextStep = urlBase + 'step';
 
 	$scope.currentState = {
 		state : null,
@@ -21,12 +21,12 @@ function ControlsCtrl($scope, $http){
 	};
 	
 	$scope.toggleState = function(){
-		if($scope.currentState.mode == 'pause'){
+		if($scope.currentState.state == 'pause'){
 			
 			$http.get(urlPlay).success(function(){
 				$scope.reload();
 			});
-		} else if($scope.currentState.mode == 'play'){	
+		} else if($scope.currentState.state == 'play'){
 			$http.get(urlPause).success(function(){
 				$scope.reload();
 			});

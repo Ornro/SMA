@@ -15,7 +15,7 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 	private Mode currentMode = Mode.AUTO;
 	private boolean isPlaying = false;
 
-	private int delay = 100;
+	private int delay = 1000;
 	
 	private Thread thread = null;
 	
@@ -44,8 +44,10 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 		if(isPlaying) return;
 		
 		isPlaying = true;
-		
-        thread.notify();
+
+        synchronized (this){
+            this.notify();
+        }
 	}
 
 	@Override
@@ -55,13 +57,6 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 		if(!isPlaying) return;
 		
 		isPlaying = false;
-		
-		//thread.interrupt();
-        try {
-            thread.wait();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
 	@Override
@@ -78,7 +73,7 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 		if(currentMode != Mode.STEP) return;
 		
 		//notifyActors();
-	    thread.notify();
+	    this.notify();
     }
 
 	@Override
@@ -110,6 +105,17 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 	public void run() {
 		
 		while(true){
+
+            if(isPlaying == false){
+                try {
+                    synchronized (this){
+                        this.wait();
+                    }
+                } catch (InterruptedException e) {
+                    //e.printStackTrace();
+                }
+            }
+
 			notifyActors();
 
             if(currentMode == Mode.AUTO){
@@ -123,10 +129,10 @@ public class ActionEngine implements ActionManager, Control, Runnable {
                 }
             }
 
-            else {
+            else if(currentMode == Mode.STEP){
 
                 try {
-                    thread.wait();
+                    this.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     break;
