@@ -150,5 +150,18 @@ public class DecisionUtils {
         a.getState().longTermGoal = a.getState().wayToDepot;
     }
 
+    public static boolean isWaypointSet(Agent a) {
+        boolean b = a.getState().boxHeld != null && a.getState().wayToDepot != null;
+        boolean b1 = a.getState().boxHeld == null && a.getState().wayToStorage != null;
 
+        return b || b1;
+    }
+
+    // cheating a bit on the rule system.
+    public static void setWayPoint (Agent a){
+        Location wp = null;
+        if (a.getState().boxHeld != null && a.getState().wayToDepot != null) wp = a.getState().wayToDepot;
+        if (a.getState().boxHeld == null && a.getState().wayToStorage != null) wp = a.getState().wayToStorage;
+        a.getState().waypoint = wp;
+    }
 }

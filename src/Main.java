@@ -1,31 +1,15 @@
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+
 import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.custom.domain.environment.Size;
 import org.ups.sma.custom.domain.environment.objects.Default;
-import org.ups.sma.custom.impl.actions.WalkOn;
-import org.ups.sma.dao.EnvAdapter;
-import org.ups.sma.dao.IEOAdapter;
-import org.ups.sma.domain.Action;
-<<<<<<< HEAD
-import org.ups.sma.custom.domain.environment.Location;
-import org.ups.sma.custom.domain.environment.Size;
-import org.ups.sma.custom.domain.environment.Type;
-import org.ups.sma.custom.domain.environment.objects.Default;
-import org.ups.sma.custom.domain.environment.objects.Stock;
-import org.ups.sma.custom.domain.environment.objects.Take;
-import org.ups.sma.custom.domain.environment.objects.Wall;
-import org.ups.sma.domain.environnement.Env;
-import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
-import org.ups.sma.impl.environement.EnvironmentManager;
-=======
+
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 import org.ups.sma.impl.environement.EnvironmentManager;
 import org.ups.sma.impl.saver.Saver;
 
 import java.util.*;
->>>>>>> save + rule enfine
+
 
 import java.util.ArrayList;
 import java.util.HashMap;

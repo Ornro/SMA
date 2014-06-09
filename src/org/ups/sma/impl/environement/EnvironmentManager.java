@@ -2,10 +2,13 @@ package org.ups.sma.impl.environement;
 
 import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.custom.domain.environment.Size;
+import org.ups.sma.custom.domain.environment.Type;
+import org.ups.sma.custom.domain.environment.objects.Default;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
 import org.ups.sma.interfaces.IEnvironmentManager;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
@@ -17,12 +20,33 @@ public final class EnvironmentManager implements IEnvironmentManager {
     private Env environment;
     private static volatile EnvironmentManager instance;
 
-    private EnvironmentManager(){
-        
+    private EnvironmentManager(Size size){
+        this.environment.size = size;
+        for(int i=0; i<environment.size.width; i++) {
+            for(int j=0; j<environment.size.height; j++) {
+                Location location = new Location(i,j);
+                Default def = new Default(location, new ArrayList<String>());
+                def.setType(Type.DEFAULT);
+                Stack<InteractiveEnvironmentObject> stack = new Stack<InteractiveEnvironmentObject>();
+                stack.push(def);
+                environment.map.put(location, stack);
+            }
+        }
     }
 
     private EnvironmentManager(Env env){
         environment = env;
+    }
+
+    public static EnvironmentManager initialize(Size size){
+        if (instance == null) // we try to avoid using synchronized
+        {
+            synchronized (EnvironmentManager.class) {
+                if (instance == null)
+                    instance = new EnvironmentManager(size);
+            }
+        }
+        return instance;
     }
 
     public static EnvironmentManager initialize(Env env){
@@ -41,7 +65,7 @@ public final class EnvironmentManager implements IEnvironmentManager {
         {
             synchronized (EnvironmentManager.class) {
                 if (instance == null)
-                    instance = new EnvironmentManager();
+                    instance = null;
             }
         }
         return instance;
