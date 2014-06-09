@@ -88,18 +88,7 @@ public class Bootstrap {
 */
         Map<Location,Stack<InteractiveEnvironmentObject>> map = new HashMap<Location, Stack<InteractiveEnvironmentObject>>();
         Env env = new Env(sizeEnv, map);
-        EnvironmentManager emanager = EnvironmentManager.initialize(env);
-        emanager.setEnvironment(env);
-        for(int i=0; i<env.size.width; i++) {
-            for(int j=0; j<env.size.height; j++) {
-                Location location = new Location(i,j);
-                Default def = new Default(location, new ArrayList<String>());
-                def.setType(Type.DEFAULT);
-                Stack<InteractiveEnvironmentObject> stack = new Stack<InteractiveEnvironmentObject>();
-                stack.push(def);
-                env.map.put(location, stack);
-            }
-        }
+        EnvironmentManager emanager = EnvironmentManager.initialize(sizeEnv);
 
         for(int i=0; i<zoneStock.width; i++) {
             for(int j=0; j<zoneStock.height; j++) {
@@ -110,8 +99,6 @@ public class Bootstrap {
                 take.setType(Type.TAKE);
                 Box box = new Box(location, actions);
                 box.setType(Type.BOX);
-                emanager.addObject(location, take);
-                emanager.addObject(location, box);
             }
         }
 
@@ -122,7 +109,6 @@ public class Bootstrap {
                 actions.add("Dump");
                 Stock stock = new Stock(location, actions);
                 stock.setType(Type.STOCK);
-                emanager.addObject(location, stock);
             }
         }
 
@@ -135,7 +121,6 @@ public class Bootstrap {
                 Location location = new Location(j+(sizeEnv.width - zoneWall.width) / 2, i);
                 Wall wall = new Wall(location, new ArrayList<String>());
                 wall.setType(Type.WALL);
-                emanager.addObject(location, wall);
             }
         }
 
@@ -177,10 +162,7 @@ public class Bootstrap {
             abilities.add("WalkOn");
             Effector effector = new Effector(rangeFilter, abilities);
 
-            Agent agent = new Agent(state, effector, perciever, decider, null);
-
-            stack.push(agent);
-            env.map.put(location,stack);
+            Agent agent = new Agent(state, effector, perciever, decider, null, location);
         }
 
         ActionEngine.getInstance().launch();

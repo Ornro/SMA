@@ -10,8 +10,7 @@ import java.util.List;
  */
 public class Box extends InteractiveEnvironmentObject {
     public Box(Location location, List<String> availableActions) {
-        super(availableActions);
-        this.location = location;
+        super(availableActions,location);
     }
 
     @Override

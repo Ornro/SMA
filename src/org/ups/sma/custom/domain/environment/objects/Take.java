@@ -10,8 +10,7 @@ import java.util.List;
  */
 public class Take extends InteractiveEnvironmentObject {
     public Take(Location location, List<String> availableActions) {
-        super(availableActions);
-        this.location = location;
+        super(availableActions, location);
     }
 
     @Override

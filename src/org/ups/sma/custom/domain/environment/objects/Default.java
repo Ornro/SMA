@@ -11,8 +11,7 @@ import java.util.List;
 public class Default extends InteractiveEnvironmentObject {
 
     public Default(Location location, List<String> availableActions) {
-        super(availableActions);
-        this.location = location;
+        super(availableActions, location);
     }
 
     @Override
