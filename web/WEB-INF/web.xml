@@ -15,6 +15,16 @@
         <url-pattern>/display</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>IndexServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>*.js</url-pattern>
+    </servlet-mapping>
+
     <servlet>
         <servlet-name>ActionEngineServlet</servlet-name>
         <servlet-class>org.ups.sma.web.ActionEngineServlet</servlet-class>
@@ -22,5 +32,9 @@
     <servlet>
         <servlet-name>DisplayServlet</servlet-name>
         <servlet-class>org.ups.sma.web.DisplayServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>IndexServlet</servlet-name>
+        <servlet-class>org.ups.sma.web.IndexServlet</servlet-class>
     </servlet>
 </web-app>

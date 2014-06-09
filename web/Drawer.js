@@ -9,31 +9,17 @@ function Drawer() {
 
 /**
  * @param {
- * 		env : {
- *			size : {
- *				width,
- *				height
- *			},
- *			map : {
- *				"1" : [
- *					{
- *						location : { x, y }
- *					}
- *				]
- *			}
- *		}
+ * 	    size : { width, height },
+ * 	    map: [ {
+ * 	        type, x, y
+ * 	    }, ... ]
  * }
  */
 Drawer.prototype.refresh = function(data){
-	if(!this.context) this._initContext(data.env.size);
-
-	var cases = [];
-	$.each(data.env.map, function(){
-		cases.push(this[0]);
-	});
+	if(!this.context) this._initContext(data.size);
 	
 	this._clearEnv();
-	$.each(cases, (function(i, elmt){
+	$.each(data.map, (function(i, elmt){
 		this._drawCase(elmt);
 	}).bind(this));
 	
@@ -44,11 +30,18 @@ Drawer.prototype._clearEnv = function(){
 };
 
 Drawer.prototype._drawCase = function(element){
-	
-	this.context.fillStyle = '#009900';
+
+    var color = "#ffffff";
+    switch(element.type){
+        case "WALL": color = '#000000'; break;
+        case "DEFAULT": color = '#eeeeee'; break;
+        default: color = '#ff0000'; break;
+    }
+
+	this.context.fillStyle = color;
 	this.context.fillRect(
-		element.location.x * this.caseWidth,
-		element.location.y * this.caseHeight,
+		element.x * this.caseWidth,
+		element.y * this.caseHeight,
 		this.caseWidth,
 		this.caseHeight
 	);

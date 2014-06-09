@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.ups.sma.domain.Mode;
 import org.ups.sma.impl.actionengine.ActionEngine;
+import org.ups.sma.impl.bootstrap.Bootstrap;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -18,8 +19,9 @@ public class ActionEngineServlet extends javax.servlet.http.HttpServlet {
     }
 
     protected void doGet(javax.servlet.http.HttpServletRequest request, javax.servlet.http.HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        String uri = request.getRequestURI();
-        String methodToCall = uri.substring(uri.lastIndexOf("?") + 1);
+        Bootstrap.getInstance();
+
+        String methodToCall = request.getQueryString();
         ActionEngine actEngine = ActionEngine.getInstance();
 
         if (methodToCall.startsWith("play")){
@@ -39,9 +41,11 @@ public class ActionEngineServlet extends javax.servlet.http.HttpServlet {
         } else if (methodToCall.startsWith("currentSet")){
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
+            System.out.println("Trace 1");
             out.write(getSet(actEngine.getMode(),actEngine.isPlaying(),actEngine.getDelay()).toString());
         }
-
+        System.out.println("Trace 10");
+        response.getWriter().write("okay");
     }
 
     private JsonObject getSet(Mode mode, boolean isPlaying, int delay){
@@ -54,6 +58,7 @@ public class ActionEngineServlet extends javax.servlet.http.HttpServlet {
         } else state = "pause";
         jso.add("state", gson.toJsonTree(state));
         jso.add("delay", gson.toJsonTree(delay));
+        System.out.println(jso);
         return jso;
     }
 }

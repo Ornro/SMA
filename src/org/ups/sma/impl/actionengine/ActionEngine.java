@@ -31,7 +31,11 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 		}
 		return instance;
 	}
-	
+
+    public void launch(){
+        thread = new Thread(this);
+        thread.start();
+    }
 	
 	@Override
 	public void play() {
@@ -41,8 +45,7 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 		
 		isPlaying = true;
 		
-		thread = new Thread(this);
-		thread.start();
+        thread.notify();
 	}
 
 	@Override
@@ -53,8 +56,13 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 		
 		isPlaying = false;
 		
-		thread.interrupt();
-	}
+		//thread.interrupt();
+        try {
+            thread.wait();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
 	@Override
 	public void changeMode(Mode newMode) {
@@ -69,8 +77,9 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 	public void step() {
 		if(currentMode != Mode.STEP) return;
 		
-		notifyActors();
-	}
+		//notifyActors();
+	    thread.notify();
+    }
 
 	@Override
 	public void setDelay(int delay) {
@@ -102,14 +111,27 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 		
 		while(true){
 			notifyActors();
-			
-			try {
-				Thread.sleep(delay);
-			} catch (InterruptedException e) {
-				//e.printStackTrace();
-				Thread.currentThread().interrupt();
-				break;
-			}
+
+            if(currentMode == Mode.AUTO){
+
+                try {
+                    Thread.sleep(delay);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    //Thread.currentThread().interrupt();
+                    break;
+                }
+            }
+
+            else {
+
+                try {
+                    thread.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    break;
+                }
+            }
 		}
 		
 	}

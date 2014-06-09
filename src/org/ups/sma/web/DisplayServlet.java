@@ -1,11 +1,13 @@
 package org.ups.sma.web;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.custom.domain.environment.Type;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
+import org.ups.sma.impl.bootstrap.Bootstrap;
 import org.ups.sma.impl.environement.EnvironmentManager;
 
 import javax.servlet.ServletException;
@@ -21,35 +23,35 @@ import java.util.*;
  */
 public class DisplayServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        this.doGet(request, response);
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Bootstrap.getInstance();
+
+        System.out.println(EnvironmentManager.getInstance().getFullEnvironment());
         EnvironmentManager emanager = EnvironmentManager.getInstance();
+
         //response.setContentType("application/json");
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-       // out.write(getInterpretation(emanager.getFullEnvironment()).toString());
-        out.println("<HTML>");
-        out.println("<HEAD><TITLE> Titre </TITLE></HEAD>");
-        out.println("<BODY>");
-        out.println("Ma première servlet");
-        out.println("</BODY>");
-        out.println("</HTML>");
-        out.close();
+        response.setContentType("application/json");
+        response.getWriter().write(getInterpretation(emanager.getFullEnvironment()).toString());
     }
 
     private JsonObject getInterpretation(Env environment){
         Gson gson = new Gson();
         JsonObject jso = new JsonObject();
         jso.add("size", gson.toJsonTree(environment.size));
-        Map<String,Stack<Type>> graphicMap = new HashMap<String, Stack<Type>>();
 
+        JsonArray map = new JsonArray();
         Set<Map.Entry<Location,Stack<InteractiveEnvironmentObject>>> set = environment.map.entrySet();
         for( Map.Entry<Location, Stack<InteractiveEnvironmentObject>> entry : set ){
-            graphicMap.put(entry.getKey().x+"@"+entry.getKey().y,convertToType(entry.getValue()));
+            JsonObject currentObj = new JsonObject();
+            currentObj.add("type", gson.toJsonTree(convertToType(entry.getValue()).peek()));
+            currentObj.addProperty("x", entry.getKey().x);
+            currentObj.addProperty("y", entry.getKey().y);
+            map.add(currentObj);
         }
-        jso.add("map",gson.toJsonTree(graphicMap));
+        jso.add("map", map);
 
         return jso;
     }
