@@ -19,6 +19,6 @@ public class Perceive extends Perciever {
 
     @Override
     public Env getInformation(Agent agent) {
-        return EnvironmentManager.getInstance().getFullEnvironment().applyFilter(perceptionFilter,agent);
+        return EnvironmentManager.getInstance().getFullEnvironment().applyFilter(perceptionFilter, agent);
     }
 }

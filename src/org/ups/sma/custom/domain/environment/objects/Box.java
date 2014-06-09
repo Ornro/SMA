@@ -9,7 +9,7 @@ import java.util.List;
  * Box object.
  */
 public class Box extends InteractiveEnvironmentObject {
-    protected Box(Location location, List<String> availableActions) {
+    public Box(Location location, List<String> availableActions) {
         super(availableActions);
         this.location = location;
     }

@@ -60,7 +60,7 @@ public abstract class Decider {
     }
 
     private static Env getReachableEnvironment(Agent agent){
-        return agent.getState().partialEnvironment.applyFilter(agent.getRange(),agent);
+        return agent.getState().partialEnvironment.applyFilter(agent.getRange(), agent);
     }
 
     private static List<Action> joinAndInstantiate(List<String> agentActions, List<String> objectActions){

@@ -13,6 +13,5 @@ import org.ups.sma.impl.agent.Agent;
  */
 public abstract class Filter {
 
-
     public abstract boolean isAcceptable(Location location , Agent agent);
 }

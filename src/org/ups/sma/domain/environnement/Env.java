@@ -71,7 +71,7 @@ public class Env {
         Env filteredEnv = new Env(this.size);
         Set<Map.Entry<Location,Stack<InteractiveEnvironmentObject>>> entries = this.map.entrySet();
         for (Map.Entry<Location,Stack<InteractiveEnvironmentObject>> entry : entries) {
-            if(filter.isAcceptable(entry.getKey(),agent)){
+            if(filter.isAcceptable(entry.getKey(), agent)){
               filteredEnv.map.put(entry.getKey(),entry.getValue());
             }
         }
