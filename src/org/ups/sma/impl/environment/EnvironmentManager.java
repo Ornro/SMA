@@ -21,17 +21,8 @@ public final class EnvironmentManager implements IEnvironmentManager {
     private static volatile EnvironmentManager instance;
 
     private EnvironmentManager(Size size){
+        this.environment = new Env();
         this.environment.size = size;
-        for(int i=0; i<environment.size.width; i++) {
-            for(int j=0; j<environment.size.height; j++) {
-                Location location = new Location(i,j);
-                Default def = new Default(location, new ArrayList<String>());
-                def.setType(Type.DEFAULT);
-                Stack<InteractiveEnvironmentObject> stack = new Stack<InteractiveEnvironmentObject>();
-                stack.push(def);
-                environment.map.put(location, stack);
-            }
-        }
     }
 
     private EnvironmentManager(Env env){
@@ -82,6 +73,9 @@ public final class EnvironmentManager implements IEnvironmentManager {
     }
 
     public void addObject(Location location, InteractiveEnvironmentObject object){
+        if (environment.map.get(location) == null){
+            environment.map.put(location,new Stack<InteractiveEnvironmentObject>());
+        }
         environment.map.get(location).push(object);
     }
 

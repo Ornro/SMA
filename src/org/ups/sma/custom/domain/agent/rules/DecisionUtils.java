@@ -4,6 +4,7 @@ import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.domain.Action;
 import org.ups.sma.domain.Choice;
 import org.ups.sma.domain.environment.Env;
+import org.ups.sma.domain.environment.InteractiveEnvironmentObject;
 import org.ups.sma.impl.agent.Agent;
 import org.ups.sma.impl.agent.impl.Decider;
 
@@ -16,9 +17,13 @@ public class DecisionUtils {
         Env perceivedEnvironment = a.getState().partialEnvironment;
         Location loc = new Location(a.getLocation().x,a.getLocation().y);
         loc.y++;
-        if (perceivedEnvironment.get(loc).is("Wall") || loc.y>perceivedEnvironment.size.height){
+        //System.out.println();
+        InteractiveEnvironmentObject object = perceivedEnvironment.get(loc);
+
+        if (object != null && (object.is("Wall") || loc.y>perceivedEnvironment.size.height)){
             loc.y-=2;
-            if (perceivedEnvironment.get(loc).is("Wall") || loc.y<perceivedEnvironment.size.height){
+            object = perceivedEnvironment.get(loc);
+            if (object != null && (object.is("Wall") || loc.y<perceivedEnvironment.size.height)){
                 return true;
             }
         }
@@ -28,7 +33,7 @@ public class DecisionUtils {
     public static boolean isRobotInFront(Agent a){
         Env perceivedEnvironment = a.getState().partialEnvironment;
         Location loc = getForwardLocation(a);
-        return perceivedEnvironment.get(loc).isAgent();
+        return perceivedEnvironment.get(loc) != null && perceivedEnvironment.get(loc).isAgent();
     }
 
     private static Location getNextLocation(Agent agent, int sign){
@@ -120,13 +125,13 @@ public class DecisionUtils {
         Env env = a.getState().partialEnvironment;
         Location loc = a.getLocation();
         loc.x ++;
-        if (!env.get(loc).is("Wall")) return false;
+        if (env.get(loc) != null && !env.get(loc).is("Wall")) return false;
         loc.y ++;
-        if (!env.get(loc).is("Wall")) return false;
+        if (env.get(loc) != null && !env.get(loc).is("Wall")) return false;
         loc.x -= 2;
-        if (!env.get(loc).is("Wall")) return false;
+        if (env.get(loc) != null && !env.get(loc).is("Wall")) return false;
         loc.y -= 2;
-        return env.get(loc).is("Wall");
+        return env.get(loc) != null && env.get(loc).is("Wall");
     }
 
     public static boolean isBoxHeld(Agent a){
@@ -134,11 +139,11 @@ public class DecisionUtils {
     }
 
     public static void setLongTermObjectiveToStorage(Agent a){
-        a.getState().longTermGoal = a.getState().wayToStorage;
+        a.getState().longTermGoal = a.getState().storage;
     }
 
     public static void setLongTermObjectiveToDepot(Agent a){
-        a.getState().longTermGoal = a.getState().wayToDepot;
+        a.getState().longTermGoal = a.getState().depot;
     }
 
     public static boolean isWaypointSet(Agent a) {
@@ -151,8 +156,19 @@ public class DecisionUtils {
     // cheating a bit on the rule system.
     public static void setWayPoint (Agent a){
         Location wp = null;
-        if (a.getState().boxHeld != null && a.getState().wayToDepot != null) wp = a.getState().wayToDepot;
-        if (a.getState().boxHeld == null && a.getState().wayToStorage != null) wp = a.getState().wayToStorage;
+        if (a.getState().boxHeld != null){
+             if (a.getState().wayToDepot != null){
+                 wp = a.getState().wayToDepot;
+             } else {
+                 wp = a.getState().depot;
+             }
+        } else {
+            if (a.getState().wayToStorage != null){
+                wp = a.getState().wayToStorage;
+            } else {
+                wp = a.getState().storage;
+            }
+        }
         a.getState().waypoint = wp;
     }
 }

@@ -1,8 +1,8 @@
 function Drawer() {
 
 	this.context = null;
-	this.caseWidth = 10;
-	this.caseHeight = 10;
+	this.caseWidth = 20;
+	this.caseHeight = 20;
 	this.width = 0;
 	this.height = 0;
 }

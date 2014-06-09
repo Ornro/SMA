@@ -13,23 +13,12 @@ public class RangeFilter extends Filter {
 
     @Override
     public boolean isAcceptable(Location location, Agent agent) {
-        Location currentLocation = agent.getLocation();
-        Location locPlusY = new Location(currentLocation.x, currentLocation.y + 1);
-        Location locMinusY = new Location(currentLocation.x, currentLocation.y - 1);
-        Location locPlusX = new Location(currentLocation.x + 1, currentLocation.y);
-        Location locMinusX = new Location(currentLocation.x - 1, currentLocation.y + 1);
-        Location locPlusXY = new Location(currentLocation.x + 1, currentLocation.y + 1);
-        Location locPlusXMinusY = new Location(currentLocation.x + 1, currentLocation.y - 1);
-        Location locMinusXPlusY = new Location(currentLocation.x - 1, currentLocation.y + 1);
-        Location locMinusXY = new Location(currentLocation.x - 1, currentLocation.y - 1);
+        Location aloc = agent.getLocation();
+        int maxX=aloc.x+1;
+        int maxY=aloc.y+1;
+        int minY=aloc.y-1;
+        int minX=aloc.x-1;
 
-        if(locPlusY.equals(currentLocation) || locMinusY.equals(currentLocation)
-                || locPlusX.equals(currentLocation) || locMinusX.equals(currentLocation)
-                || locPlusXY.equals(currentLocation) || locPlusXMinusY.equals(currentLocation)
-                || locMinusXPlusY.equals(currentLocation) || locMinusXY.equals(currentLocation)) {
-            return true;
-        } else {
-            return false;
-        }
+        return location.x<=maxX && location.x>=minX && location.y>=minY && location.y<=maxY;
     }
 }

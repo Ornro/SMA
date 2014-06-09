@@ -82,6 +82,9 @@ public class Decider {
     }
 
     private static List<Action> joinAndInstantiate(List<String> agentActions, List<String> objectActions){
+        if (objectActions == null || objectActions.isEmpty() || agentActions == null || agentActions.isEmpty()){
+            return new ArrayList<Action>();
+        }
         List<Action> actions = new ArrayList<Action>();
         List<String> intersection = new ArrayList<String>();
         intersection.addAll(agentActions);

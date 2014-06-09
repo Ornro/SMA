@@ -8,10 +8,10 @@ import org.ups.sma.impl.environment.EnvironmentManager;
 /**
  * Created by Ben on 24/05/14.
  */
-public class Perciever {
+public class Perceiver {
     private Filter perceptionFilter;
 
-    public Perciever(Filter perceptionFilter) {
+    public Perceiver(Filter perceptionFilter) {
         this.perceptionFilter = perceptionFilter;
     }
 

@@ -12,8 +12,7 @@ import org.ups.sma.domain.environment.InteractiveEnvironmentObject;
 import org.ups.sma.impl.actionengine.ActionEngine;
 import org.ups.sma.impl.agent.impl.Decider;
 import org.ups.sma.impl.agent.impl.Effector;
-import org.ups.sma.impl.agent.impl.Perciever;
-import org.ups.sma.impl.environment.EnvironmentManager;
+import org.ups.sma.impl.agent.impl.Perceiver;
 import org.ups.sma.interfaces.ActionManager;
 import org.ups.sma.interfaces.Actor;
 import org.ups.sma.interfaces.Savable;
@@ -30,15 +29,15 @@ import java.util.logging.Logger;
 public class Agent extends InteractiveEnvironmentObject implements Stateful, Actor, Savable {
     private State state;
     private Effector effector;
-    private Perciever perciever;
+    private Perceiver perceiver;
     private Decider decider;
     private Logger LOGGER = Logger.getLogger(Agent.class.getName() + id);
 
-    public Agent(State state, Effector effector, Perciever perciever, Decider dec, List<String> availableActions, Location location) {
+    public Agent(State state, Effector effector, Perceiver perceiver, Decider dec, List<String> availableActions, Location location) {
         super(availableActions, location);
         this.state = state;
         this.effector = effector;
-        this.perciever = perciever;
+        this.perceiver = perceiver;
         this.decider = dec;
 
         /**
@@ -78,7 +77,9 @@ public class Agent extends InteractiveEnvironmentObject implements Stateful, Act
 
     @Override
     public void act() {
-        Env perceivedEnvironment = perciever.getInformation(this);
+        System.out.println("Agent is acting");
+
+        Env perceivedEnvironment = perceiver.getInformation(this);
 
         this.state.partialEnvironment.merge(perceivedEnvironment);
 

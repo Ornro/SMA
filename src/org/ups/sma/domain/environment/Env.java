@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.Stack;
 
 public class Env {
-    public Size size;
+    public Size size = null;
 	public Map<Location,Stack<InteractiveEnvironmentObject>> map;
 
     /**
@@ -51,13 +51,16 @@ public class Env {
      * of two sizes is bigger which may be complicated.
      */
     public boolean merge(Env other){
-        if (this.size.equals(other)){
+
+        if (this.size == null || this.size.equals(other.size)){
             for (Location l : other.map.keySet()) {
                 Stack current = this.map.get(l);
 
-                while (!current.empty()){
-                    InteractiveEnvironmentObject e = (InteractiveEnvironmentObject) current.pop();
-                    e.destroy();
+                if (current != null ) {
+                    while (!current.empty()){
+                        InteractiveEnvironmentObject e = (InteractiveEnvironmentObject) current.pop();
+                        e.destroy();
+                    }
                 }
 
                 this.map.put(l,other.map.get(l));
@@ -79,6 +82,7 @@ public class Env {
     }
 
     public InteractiveEnvironmentObject get(Location location){
+        if (this.map.get(location) == null) return null;
         return this.map.get(location).peek();
     }
 }

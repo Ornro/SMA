@@ -1,6 +1,7 @@
 package org.ups.sma.custom.domain.agent;
 
 import org.ups.sma.custom.domain.environment.Location;
+import org.ups.sma.custom.domain.environment.Size;
 import org.ups.sma.custom.domain.environment.objects.Box;
 import org.ups.sma.domain.environment.Env;
 
@@ -9,21 +10,21 @@ import org.ups.sma.domain.environment.Env;
  */
 public class State {
 
-    public Env partialEnvironment;
+    public Env partialEnvironment = new Env();
 
-    public Location storage;
-    public Location depot;
-    public Location wayToStorage;
-    public Location wayToDepot;
+    public Location storage = null;
+    public Location depot= null;
+    public Location wayToStorage= null;
+    public Location wayToDepot= null;
 
     @Public
-    public Box boxHeld;
+    public Box boxHeld = null;
 
-    public Location longTermGoal;
-    public Location waypoint;
+    public Location longTermGoal= null;
+    public Location waypoint= null;
 
-    public boolean goingNorth;
-    public boolean goingSouth;
-    public boolean bestIsNorth;
+    public boolean goingNorth = false;
+    public boolean goingSouth = false;
+    public boolean bestIsNorth = false;
 
 }

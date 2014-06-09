@@ -19,7 +19,7 @@ import org.ups.sma.impl.actionengine.ActionEngine;
 import org.ups.sma.impl.agent.Agent;
 import org.ups.sma.impl.agent.impl.Decider;
 import org.ups.sma.impl.agent.impl.Effector;
-import org.ups.sma.impl.agent.impl.Perciever;
+import org.ups.sma.impl.agent.impl.Perceiver;
 import org.ups.sma.impl.environment.EnvironmentManager;
 
 import java.util.*;
@@ -85,10 +85,23 @@ public class Bootstrap {
         EnvironmentManager envM = EnvironmentManager.initialize(env);
         Env env2 = Saver.load("toto");
         System.out.println(env2);
+
 */
-        Map<Location,Stack<InteractiveEnvironmentObject>> map = new HashMap<Location, Stack<InteractiveEnvironmentObject>>();
-        Env env = new Env(sizeEnv, map);
         EnvironmentManager emanager = EnvironmentManager.initialize(sizeEnv);
+
+        for(int i=0; i<sizeEnv.width; i++) {
+            for(int j=0; j<sizeEnv.height; j++) {
+                Location location = new Location(i,j);
+                List<String> slist = new ArrayList<String>();
+                slist.add("WalkOn");
+                Default def = new Default(location, slist);
+                def.setType(Type.DEFAULT);
+            }
+        }
+
+        Map<Location,Stack<InteractiveEnvironmentObject>> map = new HashMap<Location, Stack<InteractiveEnvironmentObject>>();
+        Env env = emanager.getFullEnvironment();
+
 
         for(int i=0; i<zoneStock.width; i++) {
             for(int j=0; j<zoneStock.height; j++) {
@@ -125,17 +138,17 @@ public class Bootstrap {
         }
 
         List<Rule> rules = new ArrayList<Rule>();
-        rules.add(new CorridorEncounterRule());
-        rules.add(new CorridorFreeRule());
-        rules.add(new CorridorStuckRule());
-        rules.add(new DumpRule());
-        rules.add(new GetRule());
-        rules.add(new MoveForwardBlockedRule());
-        rules.add(new MoveForwardRule());
-        rules.add(new SurroundedByWallsRule());
         rules.add(new UpdateObjectiveRule());
         rules.add(new UpdateObjectiveRule2());
         rules.add(new UpdateWayPointRule());
+        rules.add(new GetRule());
+        rules.add(new DumpRule());
+        rules.add(new MoveForwardRule());
+        rules.add(new MoveForwardBlockedRule());
+        rules.add(new CorridorStuckRule());
+        rules.add(new CorridorFreeRule());
+        rules.add(new CorridorEncounterRule());
+        rules.add(new SurroundedByWallsRule());
 
         for(int i=0; i< nbAgents; i++) {
             Random rand = new Random();
@@ -152,7 +165,7 @@ public class Bootstrap {
             int n2 = (env.size.height - zoneStock.height)/2;
             state.depot = EnvironmentUtils.getRandomLocation(n1, env.size.width, n2, n2 + zoneDepot.height);
             Filter perceptionFilter = new PerceptionFilter();
-            Perciever perciever = new Perciever(perceptionFilter);
+            Perceiver perceiver = new Perceiver(perceptionFilter);
             Decider decider = new Decider(rules);
             Filter rangeFilter = new RangeFilter();
             ArrayList<String> abilities = new ArrayList<String>();
@@ -162,7 +175,7 @@ public class Bootstrap {
             abilities.add("WalkOn");
             Effector effector = new Effector(rangeFilter, abilities);
 
-            Agent agent = new Agent(state, effector, perciever, decider, null, location);
+            Agent agent = new Agent(state, effector, perceiver, decider, null, location);
         }
 
         ActionEngine.getInstance().launch();

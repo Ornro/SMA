@@ -28,10 +28,8 @@ public class ActionEngineServlet extends javax.servlet.http.HttpServlet {
             actEngine.play();
         }else if (methodToCall.startsWith("pause")){
             actEngine.pause();
-        }else if (methodToCall.startsWith("run")){
-            actEngine.run();
         }else if (methodToCall.startsWith("delay")){
-            actEngine.setDelay(Integer.parseInt(methodToCall.substring(methodToCall.indexOf("=")+1)));
+            actEngine.setDelay(Integer.parseInt(methodToCall.substring(methodToCall.indexOf("=") + 1)));
         }else if (methodToCall.startsWith("step")){
             actEngine.step();
         } else if (methodToCall.startsWith("step")){
@@ -41,11 +39,8 @@ public class ActionEngineServlet extends javax.servlet.http.HttpServlet {
         } else if (methodToCall.startsWith("currentSet")){
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
-            System.out.println("Trace 1");
-            out.write(getSet(actEngine.getMode(),actEngine.isPlaying(),actEngine.getDelay()).toString());
+            out.write(getSet(actEngine.getMode(), actEngine.isPlaying(), actEngine.getDelay()).toString());
         }
-        System.out.println("Trace 10");
-        response.getWriter().write("okay");
     }
 
     private JsonObject getSet(Mode mode, boolean isPlaying, int delay){
@@ -58,7 +53,7 @@ public class ActionEngineServlet extends javax.servlet.http.HttpServlet {
         } else state = "pause";
         jso.add("state", gson.toJsonTree(state));
         jso.add("delay", gson.toJsonTree(delay));
-        System.out.println(jso);
+
         return jso;
     }
 }
