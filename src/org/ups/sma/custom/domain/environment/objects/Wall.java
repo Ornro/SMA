@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Wall extends InteractiveEnvironmentObject {
 
-    protected Wall(Location location, List<String> availableActions) {
+    public Wall(Location location, List<String> availableActions) {
         super(availableActions);
         this.location = location;
     }

@@ -99,4 +99,7 @@ public final class EnvironmentManager implements IEnvironmentManager {
         return id;
     }
 
+    public void setEnvironment(Env env) {
+        this.environment = env;
+    }
 }

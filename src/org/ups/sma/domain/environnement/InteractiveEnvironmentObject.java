@@ -34,6 +34,8 @@ public abstract class InteractiveEnvironmentObject extends LocalizableEnvironmen
         return this.type;
     }
 
+    public void setType(Type t) { this.type = t; }
+
     public long getId(){
         return this.id;
     }

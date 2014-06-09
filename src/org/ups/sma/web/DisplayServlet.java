@@ -6,12 +6,14 @@ import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.custom.domain.environment.Type;
 import org.ups.sma.domain.environnement.Env;
 import org.ups.sma.domain.environnement.InteractiveEnvironmentObject;
+import org.ups.sma.impl.environement.EnvironmentManager;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.*;
 
 /**
@@ -19,11 +21,22 @@ import java.util.*;
  */
 public class DisplayServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        this.doGet(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        EnvironmentManager emanager = EnvironmentManager.getInstance();
+        //response.setContentType("application/json");
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+       // out.write(getInterpretation(emanager.getFullEnvironment()).toString());
+        out.println("<HTML>");
+        out.println("<HEAD><TITLE> Titre </TITLE></HEAD>");
+        out.println("<BODY>");
+        out.println("Ma première servlet");
+        out.println("</BODY>");
+        out.println("</HTML>");
+        out.close();
     }
 
     private JsonObject getInterpretation(Env environment){
