@@ -10,7 +10,7 @@ function UI(){
 UI.prototype.start = function(){
 	
 	// Loop
-	window.setInterval((this._loop.bind(this)), 1000);
+	window.setInterval((this._loop.bind(this)), 200);
 };
 
 UI.prototype._loop = function(){

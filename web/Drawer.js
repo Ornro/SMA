@@ -34,10 +34,12 @@ Drawer.prototype._drawCase = function(element){
     var color = "#ffffff";
     switch(element.type){
         case "WALL": color = '#000000'; break;
+        case "AGENT": color = '#ff00ff'; break;
+        case "AGENT_HOLDING": color = "#550055"; break;
         case "DEFAULT": color = '#eeeeee'; break;
         case "BOX": color = '#0000aa'; break;
         case "STOCK": color = '#00aa00'; break;
-        default: color = '#ff0000'; break;
+        default: color = '#ffffff'; break;
     }
 
 	this.context.fillStyle = color;
@@ -47,6 +49,28 @@ Drawer.prototype._drawCase = function(element){
 		this.caseWidth,
 		this.caseHeight
 	);
+
+    if(element.type == "BOX"){
+        this.context.strokeStyle = "#000000";
+        this.context.lineWidth = 2;
+        this.context.strokeRect(
+            element.x * this.caseWidth,
+            element.y * this.caseHeight,
+            this.caseWidth,
+            this.caseHeight
+        );
+    }
+
+    if(element.type == "AGENT_HOLDING"){
+        this.context.strokeStyle = "#000000";
+        this.context.lineWidth = 2;
+        this.context.strokeRect(
+            element.x * this.caseWidth + 2,
+            element.y * this.caseHeight + 2,
+            this.caseWidth - 4,
+            this.caseHeight - 4
+        );
+    }
 };
 
 Drawer.prototype._initContext = function(size){

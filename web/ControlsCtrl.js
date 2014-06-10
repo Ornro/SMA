@@ -14,7 +14,7 @@ function ControlsCtrl($scope, $http){
 		mode: null
 	};
 	
-	function reload(){
+	$scope.reload = function(){
 		$http.get(urlRead).success(function(data){
 			$scope.currentState = data;
 		});
@@ -51,7 +51,7 @@ function ControlsCtrl($scope, $http){
 		});
 	};
 	
-	reload();
+	$scope.reload();
 	
 	
 }

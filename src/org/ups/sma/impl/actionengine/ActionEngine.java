@@ -71,9 +71,10 @@ public class ActionEngine implements ActionManager, Control, Runnable {
 	@Override
 	public void step() {
 		if(currentMode != Mode.STEP) return;
-		
-		//notifyActors();
-	    this.notify();
+
+        synchronized (this){
+	        this.notify();
+        }
     }
 
 	@Override
@@ -132,7 +133,9 @@ public class ActionEngine implements ActionManager, Control, Runnable {
             else if(currentMode == Mode.STEP){
 
                 try {
-                    this.wait();
+                    synchronized (this){
+                        this.wait();
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     break;

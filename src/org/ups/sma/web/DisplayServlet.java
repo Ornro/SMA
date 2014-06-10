@@ -7,6 +7,7 @@ import org.ups.sma.custom.domain.environment.Location;
 import org.ups.sma.custom.domain.environment.Type;
 import org.ups.sma.domain.environment.Env;
 import org.ups.sma.domain.environment.InteractiveEnvironmentObject;
+import org.ups.sma.impl.agent.Agent;
 import org.ups.sma.impl.bootstrap.Bootstrap;
 import org.ups.sma.impl.environment.EnvironmentManager;
 
@@ -57,7 +58,15 @@ public class DisplayServlet extends HttpServlet {
         Stack<Type> ts = new Stack<Type>();
         Iterator<InteractiveEnvironmentObject> it =  stack.iterator();
         while (it.hasNext()){
-            ts.push(it.next().getType());
+            InteractiveEnvironmentObject currentItem = it.next();
+            Type currentType = currentItem.getType();
+
+            if(currentType == Type.AGENT){
+                if( ((Agent)currentItem).getState().boxHeld != null){
+                    currentType = Type.AGENT_HOLDING;
+                }
+            }
+            ts.push(currentType);
         }
 
         return ts;

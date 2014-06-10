@@ -24,28 +24,40 @@
 </head>
 <body>
 <div ng-app ng-controller="ControlsCtrl">
-		<span ng-show="currentState.state == 'play'">
-			<input type="button" ng-click="toggleState()" value="Pause" />
-		</span>
-		<span ng-show="currentState.state == 'pause'">
-			<input type="button" ng-click="toggleState()" value="Play" />
-		</span>
+    <span ng-show="currentState.state == 'play'">
+        <input type="button" ng-click="toggleState()" value="Pause" />
+    </span>
+    <span ng-show="currentState.state == 'pause'">
+        <input type="button" ng-click="toggleState()" value="Play" />
+    </span>
+
+    &nbsp;&nbsp;
+    |
+    &nbsp;&nbsp;
 
     Mode:
     <label>
         Auto
         <input type="radio" ng-model="currentState.mode" value="auto" ng-change="modeHasChanged()" />
     </label>
+    &nbsp;&nbsp;
     <label>
         Step by step
         <input type="radio" ng-model="currentState.mode" value="step" ng-change="modeHasChanged()" />
     </label>
 
+    &nbsp;&nbsp;
+    |
+    &nbsp;&nbsp;
 
     <label>
         Delay : <input type="text" size="4" ng-model="currentState.delay" /> ms
     </label>
     <input type="button" ng-click="changeDelay()" value="Ok" />
+
+    &nbsp;&nbsp;
+    |
+    &nbsp;&nbsp;
 
     <input type="button" value="Next step" ng-click="nextStep()"/>
 </div>

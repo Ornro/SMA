@@ -25,10 +25,7 @@ public class ActionEngineServlet extends javax.servlet.http.HttpServlet {
         String methodToCall = request.getQueryString();
         ActionEngine actEngine = ActionEngine.getInstance();
 
-        System.out.println(methodToCall);
-
         if (methodToCall.startsWith("play")){
-            System.out.println("Go to play");
             actEngine.play();
         }else if (methodToCall.startsWith("pause")){
             actEngine.pause();

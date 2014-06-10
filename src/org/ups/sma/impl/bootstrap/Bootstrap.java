@@ -56,11 +56,11 @@ public class Bootstrap {
         Map<Location,Stack<InteractiveEnvironmentObject>> map = new HashMap<Location, Stack<InteractiveEnvironmentObject>>();
 */
         //int nbAgents = Integer.parseInt(args[2]);
-        int nbAgents = 1;
+        int nbAgents = 10;
         Size sizeEnv = new Size(40,20);
         Size zoneStock = new Size(6,10);
         Size zoneDepot = new Size(6,10);
-        Size zoneWall = new Size(5,sizeEnv.height);
+        Size zoneWall = new Size(13,sizeEnv.height);
 
 
  /*
@@ -175,6 +175,7 @@ public class Bootstrap {
             Effector effector = new Effector(rangeFilter, abilities);
 
             Agent agent = new Agent(state, effector, perceiver, decider, null, location);
+            agent.setType(Type.AGENT);
         }
 
         ActionEngine.getInstance().launch();
