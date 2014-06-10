@@ -12,5 +12,6 @@ public class Dump extends Action {
         emanager.moveObject(a.getState().boxHeld, ieo.getLocation());
         a.getState().boxHeld = null;
         ieo.getAvailableActions().remove(this.getClass().getSimpleName());
+        ieo.getAvailableActions().add("WalkOn");
     }
 }

@@ -149,7 +149,13 @@ public class Bootstrap {
             int y = rand.nextInt(sizeEnv.height-1);
             Location location = new Location(x,y);
             Stack<InteractiveEnvironmentObject> stack = env.map.get(location);
-            if(!(stack.peek() instanceof Default)) continue;
+            while(!(stack.peek() instanceof Default)) {
+                rand = new Random();
+                x = rand.nextInt(sizeEnv.width-1);
+                y = rand.nextInt(sizeEnv.height-1);
+                location = new Location(x,y);
+                stack = env.map.get(location);
+            }
 
             State state = new State();
             int nb = (env.size.height - zoneStock.height)/2;
