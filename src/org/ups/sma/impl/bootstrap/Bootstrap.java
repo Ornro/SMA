@@ -138,6 +138,7 @@ public class Bootstrap {
         rules.add(new GetRule());
         rules.add(new DumpRule());
         rules.add(new MoveForwardRule());
+        rules.add(new MoveToOtherCorridorRule());
         rules.add(new MoveForwardBlockedRule());
         rules.add(new CorridorStuckRule());
         rules.add(new CorridorFreeRule());
@@ -147,6 +148,7 @@ public class Bootstrap {
         rules.add(new UpdateWrongDepotRule());
         rules.add(new UpdateStorageWayRule());
         rules.add(new UpdateWrongStorageRule());
+
 
         for(int i=0; i< nbAgents; i++) {
             Random rand = new Random();

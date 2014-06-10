@@ -9,9 +9,10 @@ public class Dump extends Action {
     @Override
     public void execute(Agent a, InteractiveEnvironmentObject ieo){
         EnvironmentManager emanager = EnvironmentManager.getInstance();
+        a.getState().boxHeld.getAvailableActions().add("WalkOn");
         emanager.moveObject(a.getState().boxHeld, ieo.getLocation());
         a.getState().boxHeld = null;
         ieo.getAvailableActions().remove(this.getClass().getSimpleName());
-        a.getState().boxHeld.getAvailableActions().add("WalkOn");
+
     }
 }

@@ -8,23 +8,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Ben on 07/06/14.
+ * Created by Ben on 10/06/14.
  */
-public class MoveForwardRule extends Rule {
+public class MoveToOtherCorridorRule extends Rule {
     @Override
     public boolean condition(Agent a) {
         return DecisionUtils.canMoveForward(a) &&
                 !DecisionUtils.isInCorridor(a) &&
                 !(DecisionUtils.canDump(a) && DecisionUtils.isBoxHeld(a)) &&
                 !(DecisionUtils.canGet(a) && !DecisionUtils.isBoxHeld(a)) &&
-                !DecisionUtils.isOnWrongCorridor(a);
+                DecisionUtils.isOnWrongCorridor(a);
     }
 
     @Override
     public List<Choice> choices(Agent a) {
-        System.out.println("move Rule");
+        System.out.println("move to other corridor Rule");
         List<Choice> choices = new ArrayList<Choice>();
-        choices.add(DecisionUtils.moveForward(a));
+        Choice c = DecisionUtils.getRandomMove(a);
+        if (c != null) choices.add(c);
         return choices;
     }
 }

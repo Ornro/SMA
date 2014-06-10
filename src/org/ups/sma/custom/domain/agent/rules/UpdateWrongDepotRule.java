@@ -22,6 +22,7 @@ public class UpdateWrongDepotRule extends Rule{
         System.out.println("update wrong DepotWay");
         if (a.getState().isGoingBack){
             a.getState().wayToDepot = null;
+            a.getState().wayToStorage = new Location(a.getLocation().x,a.getLocation().y);
         }
         return new ArrayList<Choice>();
     }

@@ -214,4 +214,15 @@ public class DecisionUtils {
         }
         a.getState().waypoint = wp;
     }
+
+    public static boolean isOnWrongCorridor(Agent a){
+        if (a.getState().boxHeld != null){
+            if (a.getState().wayToStorage == null) return false;
+            if (a.getLocation().x == a.getState().wayToStorage.x) return true;
+        } else {
+            if (a.getState().wayToDepot == null) return false;
+            if (a.getLocation().x == a.getState().wayToDepot.x) return true;
+        }
+        return false;
+    }
 }
