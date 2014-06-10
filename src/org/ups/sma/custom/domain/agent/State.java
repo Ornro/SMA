@@ -20,8 +20,8 @@ public class State {
     @Public
     public Box boxHeld = null;
 
-    public Location longTermGoal= null;
-    public Location waypoint= null;
+    public Location longTermGoal = null;
+    public Location waypoint = null;
 
     public boolean wasInCorridor = false;
     public boolean isGoingBack = false;

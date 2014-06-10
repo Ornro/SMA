@@ -63,6 +63,7 @@ public class Bootstrap {
         Size zoneWall = new Size(13,sizeEnv.height);
 
 
+
  /*
         List<String> actions = new ArrayList<String>();
         actions.add("Dump");
@@ -142,6 +143,10 @@ public class Bootstrap {
         rules.add(new CorridorFreeRule());
         rules.add(new CorridorEncounterRule());
         rules.add(new SurroundedByWallsRule());
+        rules.add(new UpdateDepotWayRule());
+        rules.add(new UpdateWrongDepotRule());
+        rules.add(new UpdateStorageWayRule());
+        rules.add(new UpdateWrongStorageRule());
 
         for(int i=0; i< nbAgents; i++) {
             Random rand = new Random();

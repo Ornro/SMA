@@ -44,8 +44,12 @@ public class DecisionUtils {
         if (isInCorridor(a)) return false;
         Location loc = new Location(a.getLocation().x,a.getLocation().y);
         loc.x++;
-        if (isInCorridor(loc,a.getState().partialEnvironment)) return true;
+        if (a.getState().partialEnvironment.get(loc) == null) return false;
+        if (a.getState().partialEnvironment.get(loc).is("Wall")) return false;
+        if (isInCorridor(loc, a.getState().partialEnvironment)) return true;
         loc.x -= 2;
+        if (a.getState().partialEnvironment.get(loc) == null) return false;
+        if (a.getState().partialEnvironment.get(loc).is("Wall")) return false;
         if (isInCorridor(loc,a.getState().partialEnvironment)) return true;
         return false;
     }
@@ -137,8 +141,10 @@ public class DecisionUtils {
 
     public static Choice getRandomMove(Agent agent){
         List<Choice> choices = Decider.getChoicesInvolvingAction("WalkOn", agent);
+        if (choices.size() == 0) return null;
         double f = Math.random();
         Double d = f*choices.size();
+
         return choices.get(d.intValue());
     }
 
@@ -174,25 +180,34 @@ public class DecisionUtils {
         a.getState().longTermGoal = a.getState().depot;
     }
 
-    public static boolean isWaypointSet(Agent a) {
-        boolean b = a.getState().boxHeld != null && a.getState().wayToDepot != null;
-        boolean b1 = a.getState().boxHeld == null && a.getState().wayToStorage != null;
-
-        return b || b1;
-    }
-
     // cheating a bit on the rule system.
     public static void setWayPoint (Agent a){
         Location wp = null;
-        if (a.getState().boxHeld != null){
+        if (isBoxHeld(a)){
              if (a.getState().wayToDepot != null){
-                 wp = a.getState().wayToDepot;
+                 int xa = a.getLocation().x;
+                 int xo = a.getState().depot.x;
+                 int xp = a.getState().wayToDepot.x;
+
+                 if ((xa>xp && xp>xo) || (xa<xp && xp<xo)) {
+                     wp = a.getState().wayToDepot;
+                 }else {
+                     wp = a.getState().depot;
+                 }
              } else {
                  wp = a.getState().depot;
              }
         } else {
             if (a.getState().wayToStorage != null){
-                wp = a.getState().wayToStorage;
+                int xa = a.getLocation().x;
+                int xo = a.getState().storage.x;
+                int xp = a.getState().wayToStorage.x;
+
+                if ((xa>xp && xp>xo) || (xa<xp && xp<xo)) {
+                    wp = a.getState().wayToStorage;
+                } else {
+                    wp = a.getState().storage;
+                }
             } else {
                 wp = a.getState().storage;
             }

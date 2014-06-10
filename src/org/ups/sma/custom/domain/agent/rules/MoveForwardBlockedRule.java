@@ -20,7 +20,8 @@ public class MoveForwardBlockedRule extends Rule {
     public List<Choice> choices(Agent a) {
         System.out.println("move blocked Rule");
         List<Choice> choices = new ArrayList<Choice>();
-        choices.add(DecisionUtils.getRandomMove(a));
+        Choice c = DecisionUtils.getRandomMove(a);
+        if (c != null) choices.add(c);
         return choices;
     }
 }

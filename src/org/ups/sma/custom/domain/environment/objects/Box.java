@@ -13,6 +13,7 @@ public class Box extends InteractiveEnvironmentObject {
     public Box(Location location) {
         super(new ArrayList<String>(),location);
         this.availableActions.add("Get");
+        this.availableActions.add("WalkOn");
     }
 
     @Override
